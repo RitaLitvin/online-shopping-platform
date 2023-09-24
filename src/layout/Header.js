@@ -4,8 +4,8 @@ import Navigation from "../components/Navigation";
 import Icons from "../components/Icons";
 import { styled } from "styled-components";
 
-const HeaderStyle = styled.header`
-    
+const HeaderSection = styled.header`
+    height: 460px;
 `
 const HeaderContainer = styled.div`
     display: flex;
@@ -14,15 +14,15 @@ const HeaderContainer = styled.div`
     align-items: center;
 `
 
-const Header = () => {
+const Header = ({setFilterOption}) => {
     return (
-        <HeaderStyle>
+        <HeaderSection>
             <HeaderContainer className="container">
                 <Logo />
-                <Navigation />
+                <Navigation setFilterOption = {setFilterOption} />
                 <Icons />
             </HeaderContainer>
-        </HeaderStyle>
+        </HeaderSection>
     )
 }
 export default Header;

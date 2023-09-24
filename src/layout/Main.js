@@ -1,5 +1,5 @@
 import React from "react";
-import Cards from "../components/CategoryCards";
+import CategoryCards from "../components/CategoryCards";
 import Bestsellers from "../components/Bestsellers";
 import Categories from "../components/Categories";
 // import { styled } from "styled-components";
@@ -10,12 +10,12 @@ import Instagram from "../components/Instagram";
 
 
 
-const Main = ({items}) => {
+const Main = ({items, createCount}) => {
     // console.log(items)
     return (
         <main>
-            <Cards/>
-            <Bestsellers items={items}/>
+            <CategoryCards/>
+            <Bestsellers items={items} createCount={createCount}/>
             <Categories items={items}/>
             <Trends items={items}/>
             <About/>

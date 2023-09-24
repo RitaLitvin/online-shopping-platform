@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import {Routes, Route, Link} from 'react-router-dom';
+import React from 'react';
+// import {Routes, Route, Link} from 'react-router-dom';
 import Main from '../layout/Main';
 
-const Home = ({items}) => {
+const Home = ({items, createCount}) => {
     return (
-        <Main items={items}/>
+        <Main items={items} createCount={createCount}/>
     )
 }
 

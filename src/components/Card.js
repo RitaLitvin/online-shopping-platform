@@ -38,10 +38,9 @@ const CardPrice = styled.span`
     color: #df645d;
 `
 
-const ProductCard = ({src, type, category, title, price}) => {
-    // console.log({items});
+const ProductCard = ({id, src, type, category, title, price, createCount}) => {
     return (
-    <Card>
+    <Card onClick={() => createCount(id)}>
         <CardImg src = {src} onError={(e) => e.target.src = `https://placehold.co/270x350/76c9b7/white?text=Image+not+found`} alt = {title}></CardImg>
         <CardText>
             <CardCategory>{type}/{category}</CardCategory>

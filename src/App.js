@@ -6,6 +6,8 @@ import Footer from './layout/Footer';
 import Home from './pages/Home';
 import Product from './pages/Product';
 import Shop from './pages/Shop';
+import Cart from './pages/Cart';
+import Wishlist from './pages/Wishlist';
 import { styled, createGlobalStyle } from 'styled-components';
 
 
@@ -52,47 +54,95 @@ const ContainerTop = styled.div`
 `
 
 const App = () => {
+
   const [items, setItems] = useState([]);
-  const [filterOption, setFilterOption] = useState({});
+  const [filterOption, setFilterOption] = useState(0);
+  const [cart, setCart] = useState(localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : []);
+  // const [count, setCount] = useState(1);
+  console.log(items)
 
-  // const [itemsFilter, setItemsFilter] = useState([]);
-
-  // const getAllItems = async () => {
-  //   try {
-  //     const result = await fetch('http://localhost:3001/items');
-  //     const data = await result.json();
-  //     console.log(data);
-  //     setItems(data);
-  //     // setItemsFilter(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  useEffect(() => {
-    fetch(
-      `http://localhost:3001/items?${(filterOption) ? `${filterOption.filteredBy}=${encodeURIComponent(filterOption.value)}` : '' }`
+  const createCount = (id) => {
+    console.log(id)
+    setItems(
+      items.map((product) =>
+        product.id == id ? { ...product, count: 1 } : product
       )
+    );
+    console.log(items)
+  }
+
+  const addToCart = (product) => {
+    product.count = 1;
+    const productInCart = cart.find(
+      (productInCart) => productInCart.id === product.id
+    );
+    if (!productInCart) {
+      setCart([...cart, product]);
+    }
+    console.log(cart)
+  }
+  // const counterInc = (product) => {
+  //   setCount({ ...product, count: product.count + 1 });
+  // }
+  // const counterDec = (product) => {
+  //   setCount({...product, count: product.count - 1 });
+  // }
+// console.log(count)
+  const dec = (id) => {
+    const productInCart = cart.find((productInCart) => productInCart.id === id);
+    if (productInCart.count > 1) {
+      setCart(
+        cart.map((product) =>
+          product.id === id ? { ...product, count: product.count - 1 } : product
+        )
+      );
+    } else {
+      setCart(cart.filter((productInCart) => productInCart.id !== id));
+    }
+  }
+
+    const inc = (id) => {
+      setCart(
+        cart.map((product) =>
+          product.id === id ? { ...product, count: product.count + 1 } : product
+        )
+      );
+    };
+
+    const deleteProduct = (id) => {
+      const updatedCart = cart.filter((product) => product.id !== id)
+      setCart(updatedCart)
+    }
+
+  useEffect(() => {
+    fetch(`http://localhost:3001/items?${(filterOption !== 0 && filterOption.length !== 0) ? `${filterOption.filteredBy}=${encodeURIComponent(filterOption.value)}` : '' }`)
     .then((result) => result.json())
     .then((data) => setItems(data))
   }, [filterOption])
+
+  useEffect (() => {
+    localStorage.setItem('cart', JSON.stringify(cart))
+  }, [cart])
 
   return (
     <div className="App">
     <GlobalStyle/>
         <ContainerTop>
-          <Header />
-          <Hero />
+        <Header setFilterOption = {setFilterOption}/>
+        {(window.location.href == 'http://localhost:3000/') && <Hero />}
         </ContainerTop>
         {/* <Home items={items} /> */}
         {/* <Main items={items}/> */}
 
 
         <Routes>
-          <Route path = "/" element = {<Home items={items}/>}/>
-          <Route path = "/items/:id" element = {<Product />}/>
+          <Route path = "/" element = {<Home items={items} createCount = {createCount}/>}/>
+          <Route path = "/product/:id" element = {<Product items={items} onClickFilterOption = {(id) => setFilterOption(id)} addToCart = {addToCart} inc = {inc} dec = {dec} createCount = {createCount} />}/>
           <Route path = "/shop" element = {<Shop items={items} onClickFilterOption = {(id) => setFilterOption(id)}/>}/>
-          {/* <Route path = "/wishlist" element = {<Wishlist/>}/>
-          <Route path = "/cart" element = {<Cart/>}/> */}
+          {/* <Route path = "/wishlist" element = {<Wishlist/>}/> */}
+          <Route path = "/cart" element = {<Cart cart = {cart} inc = {inc}
+              dec = {dec} deleteProduct = {deleteProduct} setFilterOption={setFilterOption}/>}/>
+          <Route path = "/wishlist" element = {<Wishlist />}/>
         </Routes>
         <Footer/>
     </div>

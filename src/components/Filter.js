@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { styled } from "styled-components";
+import { Link } from "react-router-dom";
 
 const FilterContainer = styled.div`
     display: flex;
@@ -19,25 +20,49 @@ const FilterSection = styled.div`
     align-items: flex-start;
     padding: 20px 0 0 20px;
     gap: 60px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 15px 5px rgba(150,150,150,20%);
 `
 const FilterOption = styled.div`
+    text-align: left;
+    width: 100%;
+    &:first-of-type :nth-child(2){
+        height: min-content;
+    }
+`
+const FilterOptionList = styled.div`
+    margin-top: 15px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    height: 110px;
+    overflow: auto;
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+    &::-webkit-scrollbar-track {
+        background: #d9eeea;
+        border-radius: 5px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: #75c9b7;
+        border-radius: 5px;
+    }
 `
+
 const FilterOptionTitle = styled.span`
     color: #15123d;
     text-align: left;
     font-size: 16px;
     font-weight: 600;
-    margin-bottom: 5px;
+
 `
 
 const FilterOptionValue = styled.span`
     color: #9896ab;
     font-size: 13px;
     font-weight: 400;
-    text-align: left;
     text-transform: capitalize;
     transition: 0.2s;
     cursor: pointer;
@@ -65,64 +90,70 @@ const Filter = ({onClickFilterOption}) => {
             return total;
         })
     }
-    // console.log(filterList)
-    const sortedItemsByType = filterList.reduce ((total, item) => {
+    const sortedItemsByType = Object.entries(filterList.reduce ((total, item) => {
         if (!total[item.type]) {
          total[item.type] = 1;
        } else {
          total[item.type] = total[item.type] + 1;
        }
          return total;
-     }, {})
+     }, {}))
 
-     const sortedItemsByBrands = filterList.reduce ((total, item) => {
+     const sortedItemsByBrands = Object.entries(filterList.reduce ((total, item) => {
         if (!total[item.brand]) {
          total[item.brand] = 1;
        } else {
          total[item.brand] = total[item.brand] + 1;
        }
          return total;
-     }, {})
+     }, {}))
 
-     const sortedItemsByCategory = filterList.reduce ((total, item) => {
+     const sortedItemsByCategory = Object.entries(filterList.reduce ((total, item) => {
         if (!total[item.category]) {
          total[item.category] = 1;
        } else {
          total[item.category] = total[item.category] + 1;
        }
-    //    console.log(total)
          return total;
-     }, {})
-    //  Object.entries(sortedItemsByCategory).map((item, itemId) => console.log(item[1]))
-     let category = Object.entries(sortedItemsByCategory)
-    //  console.log(category)
+     }, {}))
     return (
         <FilterContainer>
             <SearchInput></SearchInput>
             <FilterSection>
                 <FilterOption>
                     <FilterOptionTitle>Categories</FilterOptionTitle>
-                    {Object.entries(sortedItemsByType).map((item, itemId) => {
-                        return <FilterOptionValue key = {itemId}
-                        onClick = {() => onClickFilterOption({filteredBy: 'type', value: item[0]})}>{item[0]} ({item[1]})</FilterOptionValue>
-                    })}
+                    <FilterOptionList>
+                        {sortedItemsByType.map((item, itemId) => (
+                            <Link to={'/shop'} key = {itemId}>
+                                <FilterOptionValue
+                                onClick = {() => onClickFilterOption({filteredBy: 'type', value: item[0]})}>{item[0]} ({item[1]})</FilterOptionValue>
+                            </Link>
+                        ))}
+                    </FilterOptionList>
                 </FilterOption>
                 <FilterOption>
                     <FilterOptionTitle>Brands</FilterOptionTitle>
-                    {Object.entries(sortedItemsByBrands).map((item, itemId) => {
-                        return <FilterOptionValue key = {itemId}
-                        onClick = {() => onClickFilterOption({filteredBy: 'brand', value: item[0]})}>{item[0]} ({item[1]})</FilterOptionValue>
-                    })}
+                    <FilterOptionList>
+                        {sortedItemsByBrands.map((item, itemId) => (
+                            <Link to={'/shop'} key = {itemId}>
+                                <FilterOptionValue
+                                onClick = {() => onClickFilterOption({filteredBy: 'brand', value: item[0]})}>{item[0]} ({item[1]})</FilterOptionValue>
+                            </Link>
+                        ))}
+                    </FilterOptionList>
                 </FilterOption>
                 <FilterOption>
                     <FilterOptionTitle>Clothes</FilterOptionTitle>
-                        {category.map((item, itemId) => (
-                            (<FilterOptionValue
-                                key = {itemId}
-                                onClick = {() => onClickFilterOption({filteredBy: 'category', value: item[0]})}
-                                >{item[0]} ({item[1]})
-                            </FilterOptionValue>)
+                    <FilterOptionList>
+                        {sortedItemsByCategory.map((item, itemId) => (
+                            <Link to={'/shop'} key = {itemId}>
+                                <FilterOptionValue
+                                    onClick = {() => onClickFilterOption({filteredBy: 'category', value: item[0]})}
+                                    >{item[0]} ({item[1]})
+                                </FilterOptionValue>
+                            </Link>
                         ))}
+                    </FilterOptionList>
                 </FilterOption>
             </FilterSection>
         </FilterContainer>

@@ -8,19 +8,21 @@ import Filter from '../components/Filter';
 
 const ProductContainer = styled.div`
     text-align: center;
-    margin-top: -300px;
+    margin-top: -290px;
 `
 
 const ProductPath = styled.span`
     color: white;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    font-weight: 400;
     display: block;
     text-align: center;
 `
 
 const ProductWrap = styled.div`
     display: flex;
-    margin-top: 105px;
+    margin-top: 95px;
     justify-content: space-between;
 `
 const ProductImages = styled.div`
@@ -54,7 +56,7 @@ const ProductInfo = styled.div`
 const ProductInfoName = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
     align-items: flex-start;
     & span:first-child {
         font-size: 14px;
@@ -62,18 +64,21 @@ const ProductInfoName = styled.div`
         text-transform: capitalize;
     }
     & span:nth-child(2) {
-        font-size: 24px;
+        font-size: 20px;
         font-weight: 600;
+        max-width: 400px;
+        text-align: left;
         text-transform: capitalize;
     }
     & span:last-child {
-        font-size: 24px;
+        font-size: 20px;
         font-weight: 600;
         color: #df645d;
     }
 `
 const ProductSizes = styled.div`
     display: flex;
+    flex-wrap: wrap;
     gap: 20px;
     & span {
         font-size: 18px;
@@ -98,6 +103,7 @@ const ProductPieces = styled.div`
     gap: 8px;
     align-items: center;
 `
+export {ProductPieces};
 
 const ProductColor = styled.span`
     text-align: left;
@@ -137,32 +143,56 @@ const ProductDescription = styled.div`
 `
 
 
-const Product = () => {
-
+const Product = ({items, onClickFilterOption, addToCart, inc, dec, createCount }) => {
+    // localStorage.getItem('id') ? JSON.parse(localStorage.getItem('id')) :
     const { id } = useParams();
-    const [item, setItem] = useState({});
+    const [add, setAddToCart] = useState(false);
+    const [singleItem, setSingleItem] = useState(localStorage.getItem('item') ? JSON.parse(localStorage.getItem('item')) : []);
+    const [count, setCount] = useState(1);
+
+    console.log(count)
+
+    const handleAdd = (product) => {
+        setAddToCart(true);
+        addToCart(product);
+    };
+    // createCount(id)
+    const counterInc = (product) => {
+        console.log(product)
+        setCount({ ...product, count: product.count + 1 });
+    }
+    const counterDec = (product) => {
+        setCount({...product, count: product.count - 1 });
+    }
 
     useEffect(() => {
         fetch(`http://localhost:3001/items/${id}`)
-        .then((response) => response.json())
-        .then((item) => setItem(item));
+        .then((result) => result.json())
+        .then((product) => {localStorage.setItem('item', JSON.stringify(product))
+        setSingleItem(product)})
     }, [id]);
+
+    useEffect(() => {
+        setAddToCart(false);
+    }, [add]);
+
+    console.log(singleItem)
 
     return(
         <ProductContainer className='container' >
             <ProductPath>Home/Product</ProductPath>
             <h2 className='title'>Product</h2>
-            <ProductWrap key={item.title}>
+            <ProductWrap key={singleItem.id}>
                 <ProductImages>
-                    <ProductLargeImage src={item.imgFirst}></ProductLargeImage>
-                    <ProductSmallFirstImage src={item.imgSecond}></ProductSmallFirstImage>
-                    <ProductSmallSecondImage src={item.imgThird}></ProductSmallSecondImage>
+                    <ProductLargeImage src = {singleItem.imgFirst}></ProductLargeImage>
+                    <ProductSmallFirstImage src = {singleItem.imgSecond} ></ProductSmallFirstImage>
+                    <ProductSmallSecondImage src = {singleItem.imgThird}></ProductSmallSecondImage>
                 </ProductImages>
                 <ProductInfo>
                     <ProductInfoName>
-                        <span>{item.type}/{item.category}</span>
-                        <span>{item.title}</span>
-                        <span>${item.price}</span>
+                        <span>{singleItem.type}/{singleItem.category}</span>
+                        <span>{singleItem.title}</span>
+                        <span>${singleItem.price}</span>
                     </ProductInfoName>
                     <ProductSizes>
                         <span>XS</span>
@@ -173,27 +203,26 @@ const Product = () => {
                         <span>XXL</span>
                     </ProductSizes>
                     <ProductPieces>
-                        <FontAwesomeIcon icon={icon({name:"chevron-left"})} style={{ color: '#336', cursor: 'pointer', fontSize: '16px' }} />
-                        <span>1</span>
-                        <FontAwesomeIcon icon={icon({name:"chevron-right"})} style={{ color: '#336', cursor: 'pointer', fontSize: '16px' }} />
+                        <FontAwesomeIcon icon={icon({name:"chevron-left"})} style={{ color: '#336', cursor: 'pointer', fontSize: '16px' }} onClick={() => counterDec(singleItem)} />
+                        {/* <span>{count}</span> */}
+                        <FontAwesomeIcon icon={icon({name:"chevron-right"})} style={{ color: '#336', cursor: 'pointer', fontSize: '16px' }} onClick={() => counterInc(singleItem)}/>
                     </ProductPieces>
-                    <ProductColor>Color: {item.color}</ProductColor>
+                    <ProductColor>Color: {singleItem.color}</ProductColor>
                     <ProductWishlist>
                         <FontAwesomeIcon icon={icon({name:"heart", style: 'regular'})} style={{ color: '#336', cursor: 'pointer', fontSize: '20px' }} />
                         <span>add to wishlist</span>
                         <FontAwesomeIcon icon={icon({name:"comments", style: 'regular'})} style={{ color: '#336', cursor: 'pointer', fontSize: '20px', marginLeft: '40px' }} />
                         <span>ask about size</span>
                     </ProductWishlist>
-                    <Button>Add to the cart</Button>
+                    <Button onClick={() => handleAdd(singleItem)}>Add to the cart</Button>
                 </ProductInfo>
-                <Filter></Filter>
-
+                <Filter items = {items} onClickFilterOption = {onClickFilterOption}/>
             </ProductWrap>
             <ProductDescription>
-                        <h4>Description</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ac placerat vestibulum lectus mauris.
-                        Arcu odio ut sem nulla pharetra diam sit amet nisl. Egestas pretium aenean pharetra magna ac placerat vestibulum. Leo duis ut diam quam. Posuere lorem ipsum dolor sit amet. Dignissim sodales ut eu sem integer vitae. Maecenas sed enim ut sem viverra aliquet eget sit amet.</p>
-                </ProductDescription>
+                <h4>Description</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ac placerat vestibulum lectus mauris.
+                Arcu odio ut sem nulla pharetra diam sit amet nisl. Egestas pretium aenean pharetra magna ac placerat vestibulum. Leo duis ut diam quam. Posuere lorem ipsum dolor sit amet. Dignissim sodales ut eu sem integer vitae. Maecenas sed enim ut sem viverra aliquet eget sit amet.</p>
+            </ProductDescription>
         </ProductContainer>
     )
 }

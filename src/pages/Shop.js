@@ -36,7 +36,7 @@ const Shop = ({items, onClickFilterOption }) => {
             <ShopWrap>
                 <ShopSection>
                     {items.map((item) => (
-                        <NavLink to={`/items/${item.id}`} key = {item.id}>
+                        <NavLink to={`/product/${item.id}`} key = {item.id}>
                             <ProductCard
                                 src = {item.imgFirst}
                                 type = {item.type}

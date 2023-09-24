@@ -28,7 +28,7 @@ const Trends = ({items}) => {
             <TrendsCardWrap className="container">
                 {trendingItems.map((item, position) => ((position < 8) &&
                     <div key = {item.id}>
-                        <NavLink to={`/items/${item.id}`}>
+                        <NavLink to={`/product/${item.id}`}>
                             <ProductCard
                                 src = {item.imgFirst}
                                 type = {item.type}

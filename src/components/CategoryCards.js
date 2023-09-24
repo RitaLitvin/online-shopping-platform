@@ -43,7 +43,7 @@ const CardNewText = styled.h4`
     margin-bottom: 30px;
 `
 
-const Cards = () => {
+const CategoryCards = () => {
     return (
         <CardContainer className="container">
             <CardBestsellers>
@@ -56,4 +56,4 @@ const Cards = () => {
     )
 }
 
-export default Cards;
+export default CategoryCards;

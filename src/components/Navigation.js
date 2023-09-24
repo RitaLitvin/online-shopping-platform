@@ -13,17 +13,20 @@ const NavLink = styled(Link)`
     &:hover {
         color: #336;
     }
+    &:active {
+    color: red;
+  }
 `
 
-const Navigation = () => {
+const Navigation = ({setFilterOption}) => {
     return (
         <nav className="nav">
             <NavList>
                 <li className="nav__item">
-                    <NavLink to={'/'}>Home</NavLink>
+                    <NavLink to={'/'} onClick = {() => setFilterOption([])}>Home</NavLink>
                 </li>
                 <li className="nav__item">
-                    <NavLink to={'/shop'}>Shop</NavLink>
+                    <NavLink to={'/shop'} onClick= {() => setFilterOption ([])}>Shop</NavLink>
                 </li>
                 <li className="nav__item">
                     <NavLink href="#">Product</NavLink>

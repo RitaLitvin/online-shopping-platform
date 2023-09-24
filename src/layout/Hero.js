@@ -14,7 +14,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     gap: 35px;
-    margin-top: 120px;
+    margin-top: -250px;
     padding-bottom: 225px;
 `
 const HeroTitle = styled.h1`
@@ -48,9 +48,11 @@ const Button = styled.button`
     width: 170px;
     padding: 10px 0;
     border: none;
+    letter-spacing: 0.5px;
+    font-weight: 600;
     transition: 0.5s;
     &:hover{
-        box-shadow: 0px 0px 9px 5px rgba(150,150,150,50%);
+        color: #ffe36b
     }
 `
 export {Button};

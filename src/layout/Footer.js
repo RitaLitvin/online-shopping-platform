@@ -4,6 +4,7 @@ import Logo from "../components/Logo";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import {  faFacebookF, faVimeoV, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { Link } from "react-router-dom";
 
 const FooterSection = styled.footer`
     background: linear-gradient(to right, #9c9, #6cc);
@@ -37,7 +38,7 @@ const FooterTopSection = styled(FooterTopLogo)`
     & span {
         font-weight: 600;
         color: #ffe26a;
-        font-size: 16px;
+        font-size: 14px;
         letter-spacing: 1px;
     }
     & a {
@@ -86,7 +87,7 @@ const Footer = () => {
                         <span>Quick Links</span>
                         <a href = '#'>Wishlist</a>
                         <a href = '#'>Checkout</a>
-                        <a href = '#'>Cart</a>
+                        <Link to = {'/cart'}>Cart</Link>
                     </FooterTopSection>
                     <FooterTopSection>
                         <span>Contact Us</span>

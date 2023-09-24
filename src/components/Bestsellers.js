@@ -16,7 +16,7 @@ const BestsellersContainer = styled.div`
 const BestsellersSubtitle = styled.h3`
     margin-bottom: 40px;
 `
-const Bestsellers = ({items}) => {
+const Bestsellers = ({items, createCount}) => {
     const swiperRef = useRef(null);
     useEffect(() => {
         register();
@@ -59,13 +59,15 @@ const Bestsellers = ({items}) => {
             <swiper-container init='false' ref={swiperRef}>
                 {items.map((item) => (item.isBestseller === "true" &&
                     <swiper-slide key = {item.id}>
-                        <NavLink to={`/items/${item.id}`}>
+                        <NavLink to={`/product/${item.id}`}>
                             <ProductCard
+                                id = {item.id}
                                 src = {item.imgFirst}
                                 type = {item.type}
                                 category = {item.category}
                                 title = {item.title}
                                 price = {item.price}
+                                createCount = {createCount}
                             />
                         </NavLink>
                     </swiper-slide>
