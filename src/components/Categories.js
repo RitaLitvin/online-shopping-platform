@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Link } from 'react-router-dom';
 import {Button} from "../layout/Hero";
 import { styled } from "styled-components";
+import { ProductsContext } from '../context/ProductsContext';
 import cardWomenBg from "../img/category-women.jpg";
 import cardMenBg from "../img/category-men.jpg";
 
@@ -57,7 +58,9 @@ const CategoriesLink = styled(Link)`
     display: contents;
 `
 
-const Categories = ({items, onClickFilterOption}) => {
+const Categories = () => {
+    const {items, setFilterOption} = useContext(ProductsContext);
+
     const sortedItems = items.reduce ((total, item) => {
        if (!total[item.type]) {
         total[item.type] = 1;
@@ -66,25 +69,26 @@ const Categories = ({items, onClickFilterOption}) => {
       }
         return total;
     }, {})
-    console.log(Object.keys(sortedItems)[0])
     return (
         <CategoriesContainer className="container">
             <h2 className="title">Categories</h2>
             <CardsContainer>
-            <CategoriesLink to={'/shop'} onClick = {() => onClickFilterOption({filteredBy: 'type', value: `${Object.keys(sortedItems)[0]}`})}>
+            <CategoriesLink to={'/shop'} onClick = {() => setFilterOption({filteredBy: 'type', value: `${Object.keys(sortedItems)[0]}`})}>
                 <CategoriesWomen>
                     <CategoriesTitle>Women</CategoriesTitle>
                     <CategoriesQuantity>({sortedItems.women} products)</CategoriesQuantity>
                 </CategoriesWomen>
             </CategoriesLink>
-            <CategoriesLink to={'/shop'}>
+            <CategoriesLink to={'/shop'} onClick = {() => setFilterOption({filteredBy: 'type', value: `${Object.keys(sortedItems)[1]}`})}>
                 <CategoriesMen>
                     <CategoriesTitle>Men</CategoriesTitle>
                     <CategoriesQuantity>({sortedItems.men} products)</CategoriesQuantity>
                 </CategoriesMen>
             </CategoriesLink>
             </CardsContainer>
-            <Button>Show more</Button>
+            <CategoriesLink to={'/shop'}>
+                <Button>Show more</Button>
+            </CategoriesLink>
         </CategoriesContainer>
     )
 }

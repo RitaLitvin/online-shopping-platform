@@ -1,10 +1,12 @@
-import React, {useRef, useEffect, useState} from "react";
+import React, {useRef, useEffect, useState, useContext} from "react";
+import { ProductsContext } from "../context/ProductsContext";
 import { styled } from "styled-components";
 import { Link } from 'react-router-dom';
 import { CSSTransition } from "react-transition-group";
 import NavigationList from "./NavigationList";
 
-const Navigation = ({setFilterOption, active}) => {
+const Navigation = ({active}) => {
+
     const nodeRef = useRef(null);
     const [windowWidth, setWindowWidth] = useState(window.screen.width)
 
@@ -14,16 +16,19 @@ const Navigation = ({setFilterOption, active}) => {
     }, [windowWidth]);
     return (
         <nav>
-            {windowWidth > 1023 ? <NavigationList setFilterOption={setFilterOption}/> :
+            {windowWidth > 1023 ? <NavigationList /> :
 
             <CSSTransition
+                nodeRef={nodeRef}
                 in={active}
                 classNames='show'
                 timeout={500}
-                nodeRef={nodeRef}
+                mountOnEnter
                 unmountOnExit
             >
-                <NavigationList setFilterOption={setFilterOption}/>
+                <div ref={nodeRef}>
+                    <NavigationList/>
+                </div>
             </CSSTransition>}
         </nav>
     )

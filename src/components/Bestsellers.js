@@ -1,9 +1,10 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useContext} from "react";
+import { ProductsContext } from '../context/ProductsContext';
 import {Button} from "../layout/Hero";
 import { styled } from "styled-components";
 import { register } from 'swiper/element/bundle';
 import ProductCard from "./Card";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const BestsellersContainer = styled.div`
     text-align: center;
@@ -11,7 +12,8 @@ const BestsellersContainer = styled.div`
 const BestsellersSubtitle = styled.h3`
     margin-bottom: 40px;
 `
-const Bestsellers = ({items}) => {
+const Bestsellers = () => {
+    const {items, setFilterOption} = useContext(ProductsContext);
     const swiperRef = useRef(null);
     useEffect(() => {
         register();
@@ -77,7 +79,7 @@ const Bestsellers = ({items}) => {
             <swiper-container init='false' ref={swiperRef}>
                 {items.map((item) => (item.isBestseller === "true" &&
                     <swiper-slide key = {item.id}>
-                        <NavLink to={`/product/${item.id}`}>
+                        <Link to={`/product/${item.id}`}>
                             <ProductCard
                                 src = {item.imgFirst}
                                 type = {item.type}
@@ -85,11 +87,13 @@ const Bestsellers = ({items}) => {
                                 title = {item.title}
                                 price = {item.price}
                             />
-                        </NavLink>
+                        </Link>
                     </swiper-slide>
                 ))}
             </swiper-container>
-            <Button>read more</Button>
+            <Link to={'/shop'} onClick={() => setFilterOption({filteredBy: 'isBestseller', value: 'true'})}>
+                <Button>show more</Button>
+            </Link>
         </BestsellersContainer>
     )
 }

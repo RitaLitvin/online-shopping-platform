@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
+import { ProductsContext } from "../context/ProductsContext";
 
 const FilterContainer = styled.div`
     display: flex;
@@ -87,7 +88,8 @@ const FilterOptionValue = styled.span`
     }
 `
 
-const Filter = ({onClickFilterOption}) => {
+const Filter = () => {
+    const {setFilterOption} = useContext(ProductsContext);
     const [filterList, setFilterList] = useState([]);
     useEffect(() => {
         fetch(`http://localhost:3001/items`)
@@ -131,7 +133,7 @@ const Filter = ({onClickFilterOption}) => {
                         {sortedItemsByType.map((item, itemId) => (
                             <Link to={'/shop'} key = {itemId}>
                                 <FilterOptionValue
-                                onClick = {() => onClickFilterOption({filteredBy: 'type', value: item[0]})}>{item[0]} ({item[1]})</FilterOptionValue>
+                                onClick = {() => setFilterOption({filteredBy: 'type', value: item[0]})}>{item[0]} ({item[1]})</FilterOptionValue>
                             </Link>
                         ))}
                     </FilterOptionList>
@@ -142,7 +144,7 @@ const Filter = ({onClickFilterOption}) => {
                         {sortedItemsByBrands.map((item, itemId) => (
                             <Link to={'/shop'} key = {itemId}>
                                 <FilterOptionValue
-                                onClick = {() => onClickFilterOption({filteredBy: 'brand', value: item[0]})}>{item[0]} ({item[1]})</FilterOptionValue>
+                                onClick = {() => setFilterOption({filteredBy: 'brand', value: item[0]})}>{item[0]} ({item[1]})</FilterOptionValue>
                             </Link>
                         ))}
                     </FilterOptionList>
@@ -153,7 +155,7 @@ const Filter = ({onClickFilterOption}) => {
                         {sortedItemsByCategory.map((item, itemId) => (
                             <Link to={'/shop'} key = {itemId}>
                                 <FilterOptionValue
-                                    onClick = {() => onClickFilterOption({filteredBy: 'category', value: item[0]})}
+                                    onClick = {() => setFilterOption({filteredBy: 'category', value: item[0]})}
                                     >{item[0]} ({item[1]})
                                 </FilterOptionValue>
                             </Link>

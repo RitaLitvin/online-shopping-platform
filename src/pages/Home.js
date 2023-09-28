@@ -1,10 +1,11 @@
 import React from 'react';
 import Main from '../layout/Main';
 
-const Home = ({items}) => {
+const Home = () => {
     return (
-        <Main items={items}/>
+        <Main />
     )
 }
-
 export default Home;
+
+

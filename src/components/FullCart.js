@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import { ProductsContext } from '../context/ProductsContext';
 import { styled } from 'styled-components';
 import { Button } from '../layout/Hero';
 import { Link } from 'react-router-dom';
@@ -36,9 +37,9 @@ const FullCartProductSum = styled.div`
     }
 `
 
-const FullCart = ({cart, inc, dec, deleteProduct, totalSum}) => {
-    console.log(cart);
-    console.log(totalSum(cart));
+const FullCart = () => {
+    const {cart, totalSum} = useContext(ProductsContext);
+
     return (
         <FullCartContainer>
             <FullCartProducts>
@@ -50,9 +51,6 @@ const FullCart = ({cart, inc, dec, deleteProduct, totalSum}) => {
                         title = {product.title}
                         price = {product.price}
                         count = {product.count}
-                        inc={inc}
-                        dec={dec}
-                        deleteProduct = {deleteProduct}
                     />
                 ))}
             </FullCartProducts>

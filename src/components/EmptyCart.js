@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import { ProductsContext } from '../context/ProductsContext';
 import { styled } from 'styled-components';
 import { Button } from '../layout/Hero';
 import { Link } from 'react-router-dom';
@@ -19,6 +20,7 @@ const EmptyCartContainer = styled.div`
     @media (max-width:800px) {
         padding: 50px 20px;
         text-align: center;
+        justify-items: center;
         grid-template-areas: 'title' 'text' 'button';
     }
     & h2 {
@@ -44,7 +46,9 @@ const EmptyCartContainer = styled.div`
     }
 `
 
-const EmptyCart = ({setFilterOption}) => {
+const EmptyCart = () => {
+    const {setFilterOption} = useContext(ProductsContext);
+
     return(
         <EmptyCartContainer>
             <h2 className='title'>your shopping cart is empty</h2>

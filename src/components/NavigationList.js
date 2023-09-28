@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useContext} from "react";
+import { ProductsContext } from "../context/ProductsContext";
 import { styled } from "styled-components";
 import { Link } from 'react-router-dom';
 
@@ -30,8 +31,9 @@ const NavLink = styled(Link)`
     }
 `
 
+const NavigationList = () => {
+    const { setFilterOption } = useContext(ProductsContext);
 
-const NavigationList = ({setFilterOption}) => {
     return (
         <NavList >
             <li>

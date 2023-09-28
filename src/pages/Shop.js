@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React, {useContext} from "react";
 import { styled } from "styled-components";
 import ProductCard from "../components/Card";
 import Filter from "../components/Filter";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { ProductsContext } from "../context/ProductsContext";
 
 const ShopContainer = styled.div`
     text-align: center;
@@ -34,8 +35,8 @@ const ShopCardWrap = styled.div`
     }
 
 `
-const Shop = ({ items, onClickFilterOption }) => {
-
+const Shop = () => {
+    const {items} = useContext(ProductsContext)
     return (
         <ShopContainer className="container">
             <ShopPath>Home/Shop</ShopPath>
@@ -44,7 +45,7 @@ const Shop = ({ items, onClickFilterOption }) => {
                 <ShopSection>
                     {items.map((item) => (
                         <ShopCardWrap key = {item.id}>
-                            <NavLink to={`/product/${item.id}`} >
+                            <Link to={`/product/${item.id}`} >
                                 <ProductCard
                                     src = {item.imgFirst}
                                     type = {item.type}
@@ -52,12 +53,11 @@ const Shop = ({ items, onClickFilterOption }) => {
                                     title = {item.title}
                                     price = {item.price}
                                 />
-                            </NavLink>
+                            </Link>
                         </ShopCardWrap>
                     ))}
                 </ShopSection>
-                <Filter items = {items}
-                    onClickFilterOption={onClickFilterOption} />
+                <Filter/>
             </ShopWrap>
         </ShopContainer>
     )

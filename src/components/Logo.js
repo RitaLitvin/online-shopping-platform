@@ -1,18 +1,20 @@
-import React from "react";
+import React, {useContext} from "react";
+import { ProductsContext } from "../context/ProductsContext";
 import logo from '../img/logo.png';
 import { styled } from "styled-components";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const LogoImg = styled.img`
     width: 115px;
     height: 25px;
 `
 
-const Logo = ({setFilterOption}) => {
+const Logo = () => {
+    const {setFilterOption} = useContext(ProductsContext);
     return (
-        <NavLink to={'/'} onClick = {() => setFilterOption([])}>
+        <Link to={'/'} onClick = {() => setFilterOption([])}>
             <LogoImg src={logo} alt="logo"></LogoImg>
-        </NavLink>
+        </Link>
     )
 }
 

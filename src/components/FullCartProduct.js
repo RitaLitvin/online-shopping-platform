@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import { ProductsContext } from '../context/ProductsContext';
 import { styled } from 'styled-components';
 import {ProductPieces} from '../pages/Product'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -64,7 +65,8 @@ const FullCartProductContainer = styled.div`
     }
 `
 
-const FullCartProduct = ({id, src, title, price, count, inc, dec, deleteProduct}) => {
+const FullCartProduct = ({id, src, title, price, count}) => {
+    const {inc, dec, deleteProduct} = useContext(ProductsContext);
     return (
         <FullCartProductContainer>
             <FontAwesomeIcon icon={icon({name:"circle-xmark"})} style={{ color: '#336', cursor: 'pointer', fontSize: '16px' }} onClick={() => deleteProduct(id)} />

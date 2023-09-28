@@ -31,14 +31,14 @@ const HeaderBurger = styled.div`
         border-radius: 10px;
     }
 `
-const Header = ({setFilterOption}) => {
+const Header = () => {
     const [active, setActive] = useState(false);
 
     return (
         <HeaderSection>
             <HeaderContainer className="container">
                 <Logo />
-                <Navigation setFilterOption = {setFilterOption} active = {active}/>
+                <Navigation active = {active}/>
                 <Icons />
                 <HeaderBurger onClick={() => setActive(!active)}>
                     <span></span>

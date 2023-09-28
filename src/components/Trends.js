@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useContext} from "react";
+import { ProductsContext } from "../context/ProductsContext";
 import {Button} from "../layout/Hero";
 import { styled } from "styled-components";
 import ProductCard from "./Card";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 const TrendsContainer = styled.div `
@@ -22,7 +23,9 @@ const TrendsCardContainer = styled.div`
         width: 30%;
     }
 `
-const Trends = ({items}) => {
+const Trends = () => {
+    const { items, setFilterOption } = useContext(ProductsContext);
+
     const trendingItems = items.filter((item) => {
         return item.isTrending === "true"
     })
@@ -33,7 +36,7 @@ const Trends = ({items}) => {
             <TrendsCardWrap className="container">
                 {trendingItems.map((item, position) => ((position < 8) &&
                     <TrendsCardContainer key = {item.id}>
-                        <NavLink to={`/product/${item.id}`}>
+                        <Link to={`/product/${item.id}`}>
                             <ProductCard
                                 src = {item.imgFirst}
                                 type = {item.type}
@@ -41,11 +44,13 @@ const Trends = ({items}) => {
                                 title = {item.title}
                                 price = {item.price}
                                 />
-                        </NavLink>
+                        </Link>
                      </TrendsCardContainer>
                     ))}
             </TrendsCardWrap>
-            <Button>Show more</Button>
+            <Link to={`/shop`} onClick = {() => setFilterOption({filteredBy: 'isTrending', value: 'true'})}>
+                <Button>Show more</Button>
+            </Link>
         </TrendsContainer>
 
     )

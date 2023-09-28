@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
+import { ProductsContext } from '../context/ProductsContext';
 import { useParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -203,14 +204,13 @@ const ProductDescription = styled.div`
 `
 
 
-const Product = ({ items, onClickFilterOption, addToCart }) => {
+const Product = () => {
+    const { addToCart } = useContext(ProductsContext);
     const { id } = useParams();
-
     const [add, setAddToCart] = useState(false);
     const [singleItem, setSingleItem] = useState(localStorage.getItem('item') ? JSON.parse(localStorage.getItem('item')) : []);
     const [count, setCount] = useState(1);
     const [windowWidth, setWindowWidth] = useState(window.screen.width)
-    // const [activeFilter, setActiveFilter] = useState(false);
 
     const handleAdd = (product) => {
         setAddToCart(true);
@@ -283,7 +283,7 @@ const Product = ({ items, onClickFilterOption, addToCart }) => {
                     </ProductWishlist>
                     <Button onClick={() => handleAdd(singleItem)}>Add to the cart</Button>
                 </ProductInfo>
-                { windowWidth >= 700 ? <Filter items = {items} onClickFilterOption = {onClickFilterOption}/> : null}
+                { windowWidth >= 700 ? <Filter/> : null}
             </ProductWrap>
             <ProductDescription>
                 <h4>Description</h4>
