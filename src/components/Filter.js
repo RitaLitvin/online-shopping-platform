@@ -6,8 +6,10 @@ const FilterContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
+    @media (max-width:500px) {
+        width: 40%;
+    }
 `
-
 const SearchInput = styled.input`
     border-radius: 5px;
     outline: none;
@@ -23,6 +25,11 @@ const FilterSection = styled.div`
     background-color: white;
     border-radius: 5px;
     box-shadow: 0px 0px 15px 5px rgba(150,150,150,20%);
+    @media (max-width:500px) {
+       gap: 15px;
+       padding: 20px 0 0 10px;
+
+    }
 `
 const FilterOption = styled.div`
     text-align: left;
@@ -38,6 +45,10 @@ const FilterOptionList = styled.div`
     gap: 10px;
     height: 110px;
     overflow: auto;
+    @media (max-width:500px) {
+       gap: 0;
+       margin-top: 5px;
+    }
     &::-webkit-scrollbar {
         width: 10px;
     }
@@ -56,7 +67,9 @@ const FilterOptionTitle = styled.span`
     text-align: left;
     font-size: 16px;
     font-weight: 600;
-
+    @media (max-width:500px) {
+       font-size: 12px;
+    }
 `
 
 const FilterOptionValue = styled.span`
@@ -66,6 +79,9 @@ const FilterOptionValue = styled.span`
     text-transform: capitalize;
     transition: 0.2s;
     cursor: pointer;
+    @media (max-width:500px) {
+       font-size: 10px;
+    }
     &:hover {
         color:#8fd3c4;
     }
@@ -79,17 +95,6 @@ const Filter = ({onClickFilterOption}) => {
         .then((data) => setFilterList(data))
       }, [])
 
-    const filter = function (filteredBy) {
-        filterList.reduce ((total, item) => {
-            if (!total[item.filteredBy]) {
-            total[item.filteredBy] = 1;
-            } else {
-            total[item.filteredBy] = total[item.filteredBy] + 1;
-            }
-            total.sortedBy = 'category';
-            return total;
-        })
-    }
     const sortedItemsByType = Object.entries(filterList.reduce ((total, item) => {
         if (!total[item.type]) {
          total[item.type] = 1;

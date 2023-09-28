@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { Button } from '../layout/Hero';
 import Filter from '../components/Filter';
+
 
 const ProductContainer = styled.div`
     text-align: center;
@@ -23,13 +24,24 @@ const ProductPath = styled.span`
 const ProductWrap = styled.div`
     display: flex;
     margin-top: 95px;
+    gap: 20px;
     justify-content: space-between;
+    @media (max-width: 500px) {
+        flex-direction: column;
+        align-items: center
+    }
 `
 const ProductImages = styled.div`
     display: grid;
     grid-template-areas: 'large large' 'small-first small-second';
     grid-template-columns: 75px;
     grid-row-gap: 5px;
+    @media (max-width: 880px) {
+        width: 45%;
+    }
+    @media (max-width: 500px) {
+        width: 50%;
+    }
 `
 const ProductLargeImage = styled.img`
     grid-area: large;
@@ -37,6 +49,11 @@ const ProductLargeImage = styled.img`
     height: 470px;
     box-shadow: 0px 0px 15px 5px rgba(150,150,150,20%);
     border-radius: 5px;
+    @media (max-width: 880px) {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 `
 const ProductSmallFirstImage = styled.img`
     grid-area: small-first;
@@ -52,16 +69,28 @@ const ProductInfo = styled.div`
     display: flex;
     flex-direction: column;
     gap: 40px;
+    @media (max-width: 880px) {
+        gap:20px;
+        }
+    @media (max-width: 500px) {
+        align-items: center;
+    }
 `
 const ProductInfoName = styled.div`
     display: flex;
     flex-direction: column;
     gap: 15px;
     align-items: flex-start;
+    @media (max-width: 500px) {
+            align-items: center;
+        }
     & span:first-child {
         font-size: 14px;
         color: white;
         text-transform: capitalize;
+        @media (max-width: 500px) {
+            color: #336;
+        }
     }
     & span:nth-child(2) {
         font-size: 20px;
@@ -69,17 +98,36 @@ const ProductInfoName = styled.div`
         max-width: 400px;
         text-align: left;
         text-transform: capitalize;
+        @media (max-width: 880px) {
+            font-size: 18px;
+        }
+        @media (max-width: 500px) {
+            font-size: 16px;
+            text-align: center;
+        }
     }
     & span:last-child {
         font-size: 20px;
         font-weight: 600;
         color: #df645d;
+        @media (max-width: 880px) {
+            font-size: 18px;
+        }
+        @media (max-width: 500px) {
+            font-size: 16px;
+        }
     }
 `
 const ProductSizes = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    @media (max-width: 880px) {
+        gap: 10px;
+        }
+    @media (max-width: 500px) {
+        justify-content: center;
+    }
     & span {
         font-size: 18px;
         width: 60px;
@@ -91,6 +139,12 @@ const ProductSizes = styled.div`
         line-height: 3.5;
         cursor: pointer;
         transition: 0.3s;
+        @media (max-width: 880px) {
+            width: 40px;
+            height: 40px;
+            font-size: 13px;
+            line-height: 3;
+        }
         &:hover {
             background-color: #75c9b7;
         }
@@ -110,6 +164,9 @@ const ProductColor = styled.span`
     font-size: 18px;
     font-weight: 600;
     text-transform: capitalize;
+    @media (max-width: 880px) {
+            font-size: 14px;
+        }
 `
 const ProductWishlist = styled.div`
     display: flex;
@@ -119,6 +176,9 @@ const ProductWishlist = styled.div`
         font-weight: 600;
         text-transform: capitalize;
         margin-left: 10px;
+        @media (max-width: 880px) {
+            font-size: 14px;
+        }
     }
 `
 const ProductDescription = styled.div`
@@ -143,32 +203,32 @@ const ProductDescription = styled.div`
 `
 
 
-const Product = ({items, onClickFilterOption, addToCart, inc, dec, createCount }) => {
-    // localStorage.getItem('id') ? JSON.parse(localStorage.getItem('id')) :
+const Product = ({ items, onClickFilterOption, addToCart }) => {
     const { id } = useParams();
+
     const [add, setAddToCart] = useState(false);
     const [singleItem, setSingleItem] = useState(localStorage.getItem('item') ? JSON.parse(localStorage.getItem('item')) : []);
     const [count, setCount] = useState(1);
-
-    console.log(count)
+    const [windowWidth, setWindowWidth] = useState(window.screen.width)
+    // const [activeFilter, setActiveFilter] = useState(false);
 
     const handleAdd = (product) => {
         setAddToCart(true);
         addToCart(product);
     };
-    // createCount(id)
+
     const counterInc = (product) => {
-        console.log(product)
-        setCount({ ...product, count: product.count + 1 });
+        setCount(product.count = product.count + 1 );
     }
     const counterDec = (product) => {
-        setCount({...product, count: product.count - 1 });
+        setCount(product.count == 1 ? product.count : product.count = product.count - 1 );
     }
 
     useEffect(() => {
         fetch(`http://localhost:3001/items/${id}`)
         .then((result) => result.json())
-        .then((product) => {localStorage.setItem('item', JSON.stringify(product))
+        .then((product) => {  product.count = count
+        localStorage.setItem('item', JSON.stringify(product))
         setSingleItem(product)})
     }, [id]);
 
@@ -176,7 +236,14 @@ const Product = ({items, onClickFilterOption, addToCart, inc, dec, createCount }
         setAddToCart(false);
     }, [add]);
 
-    console.log(singleItem)
+    useEffect(() => {
+        localStorage.setItem('item', JSON.stringify(singleItem))
+    }, [count]);
+
+    useEffect(() => {
+        window.onresize = () => {setWindowWidth(window.screen.width)};
+        return () => {window.onresize = false};
+    }, [windowWidth]);
 
     return(
         <ProductContainer className='container' >
@@ -204,7 +271,7 @@ const Product = ({items, onClickFilterOption, addToCart, inc, dec, createCount }
                     </ProductSizes>
                     <ProductPieces>
                         <FontAwesomeIcon icon={icon({name:"chevron-left"})} style={{ color: '#336', cursor: 'pointer', fontSize: '16px' }} onClick={() => counterDec(singleItem)} />
-                        {/* <span>{count}</span> */}
+                        <span>{singleItem.count}</span>
                         <FontAwesomeIcon icon={icon({name:"chevron-right"})} style={{ color: '#336', cursor: 'pointer', fontSize: '16px' }} onClick={() => counterInc(singleItem)}/>
                     </ProductPieces>
                     <ProductColor>Color: {singleItem.color}</ProductColor>
@@ -216,7 +283,7 @@ const Product = ({items, onClickFilterOption, addToCart, inc, dec, createCount }
                     </ProductWishlist>
                     <Button onClick={() => handleAdd(singleItem)}>Add to the cart</Button>
                 </ProductInfo>
-                <Filter items = {items} onClickFilterOption = {onClickFilterOption}/>
+                { windowWidth >= 700 ? <Filter items = {items} onClickFilterOption = {onClickFilterOption}/> : null}
             </ProductWrap>
             <ProductDescription>
                 <h4>Description</h4>

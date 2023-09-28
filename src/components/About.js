@@ -20,6 +20,9 @@ const AboutImg = styled.div`
     box-shadow: 0px 0px 15px rgba(150,150,150,90%);
     position: relative;
     border-radius: 5px;
+    @media (max-width: 1023px) {
+        display: none;
+    }
     &::before {
         content: "About Miralou";
         position: absolute;
@@ -32,6 +35,9 @@ const AboutImg = styled.div`
         top: calc(50% - 186px);
         transform: rotate(180deg);
         writing-mode: vertical-rl;
+        @media (max-width: 1023px) {
+            content: '';
+        }
     }
 `
 const AboutText = styled.div`
@@ -39,11 +45,14 @@ const AboutText = styled.div`
     gap: 30px;
     justify-content: center;
     flex-direction: column;
+    @media (max-width: 1023px) {
+        align-items: center;
+        margin-top: 30px;
+    }
 `
 const AboutTitle = styled.h2`
     z-index: 1;
     width: max-content;
-    /* flex-flow; */
 `
 const AboutDescription = styled.p`
     word-spacing: -2.5px;

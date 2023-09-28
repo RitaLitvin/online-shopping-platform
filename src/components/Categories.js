@@ -1,9 +1,9 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import {Button} from "../layout/Hero";
 import { styled } from "styled-components";
 import cardWomenBg from "../img/category-women.jpg";
 import cardMenBg from "../img/category-men.jpg";
-
 
 const CategoriesContainer = styled.div`
     text-align: center;
@@ -14,6 +14,7 @@ const CardsContainer = styled.div`
     justify-content: space-between;
     margin-top: 45px;
     margin-bottom: 40px;
+    gap: 20px;
 `
 const CategoriesWomen = styled.div`
     display: flex;
@@ -26,14 +27,20 @@ const CategoriesWomen = styled.div`
     height: 380px;
     background-size: cover;
     border-radius: 5px;
+    cursor: pointer;
+    @media (max-width:800px) {
+        height: 200px;
+        background-image: linear-gradient(rgba(116,116,116,0.7), rgba(116,116,116,0.7)), url(${cardWomenBg});
+
+    }
 `
 const CategoriesMen = styled(CategoriesWomen)`
     background: url(${cardMenBg}) center no-repeat;
     background-size: cover;
+    @media (max-width:800px) {
+        background-image: linear-gradient(rgba(116,116,116,0.7), rgba(116,116,116,0.7)), url(${cardMenBg});
+    }
 `
-// const CategoriesKids = styled.div`
-//     grid-area: kids;
-// `
 const CategoriesTitle = styled.h3`
     font-size: 18px;
     color: white;
@@ -46,8 +53,11 @@ const CategoriesQuantity = styled.span`
     padding-left: 20px;
     margin-bottom: 40px;
 `
+const CategoriesLink = styled(Link)`
+    display: contents;
+`
 
-const Categories = ({items}) => {
+const Categories = ({items, onClickFilterOption}) => {
     const sortedItems = items.reduce ((total, item) => {
        if (!total[item.type]) {
         total[item.type] = 1;
@@ -56,18 +66,23 @@ const Categories = ({items}) => {
       }
         return total;
     }, {})
+    console.log(Object.keys(sortedItems)[0])
     return (
         <CategoriesContainer className="container">
             <h2 className="title">Categories</h2>
             <CardsContainer>
+            <CategoriesLink to={'/shop'} onClick = {() => onClickFilterOption({filteredBy: 'type', value: `${Object.keys(sortedItems)[0]}`})}>
                 <CategoriesWomen>
                     <CategoriesTitle>Women</CategoriesTitle>
                     <CategoriesQuantity>({sortedItems.women} products)</CategoriesQuantity>
                 </CategoriesWomen>
+            </CategoriesLink>
+            <CategoriesLink to={'/shop'}>
                 <CategoriesMen>
                     <CategoriesTitle>Men</CategoriesTitle>
                     <CategoriesQuantity>({sortedItems.men} products)</CategoriesQuantity>
                 </CategoriesMen>
+            </CategoriesLink>
             </CardsContainer>
             <Button>Show more</Button>
         </CategoriesContainer>

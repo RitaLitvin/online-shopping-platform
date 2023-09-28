@@ -18,6 +18,11 @@ const FooterTop = styled.div`
     display: flex;
     justify-content: space-between;
     margin: 50px 0;
+    font-size: 12px;
+    @media (max-width: 790px) {
+        flex-direction: column;
+        gap: 30px;
+    }
 `
 const FooterTopLogo = styled.div`
     display: flex;
@@ -35,10 +40,13 @@ const FooterTopLogoIcons = styled.div`
 `
 const FooterTopSection = styled(FooterTopLogo)`
     gap: 25px;
+    @media (max-width: 790px) {
+        gap: 10px;
+    }
     & span {
         font-weight: 600;
         color: #ffe26a;
-        font-size: 14px;
+        font-size: 15px;
         letter-spacing: 1px;
     }
     & a {
@@ -59,6 +67,9 @@ const FooterBottom = styled.div`
     & span {
         font-weight: 600;
         font-size: 14px;
+    }
+    & span:last-of-type{
+        text-align: right;
     }
 `
 

@@ -7,7 +7,13 @@ const ClientsContainer = styled.div`
     text-align: center;
     margin-top: -190px;
 `
-
+const ClientsTitle = styled.h2`
+    /* &::before{
+    }
+    @media (max-width: 600px) {
+        content: none;
+    } */
+`
 const url = 'https://trustpilot4.p.rapidapi.com/?domain=www.asos.com&page=2';
 const options = {
 	method: 'GET',
@@ -34,7 +40,6 @@ const Clients = () => {
     useEffect(() => {
         register();
         const params = {
-        slidesPerView: 3,
         navigation: true,
         pagination: true,
         injectStyles: [
@@ -69,14 +74,25 @@ const Clients = () => {
             }
         `,
         ],
+        breakpoints: {
+            0: {
+                slidesPerView: 1,
+            },
+            720: {
+                slidesPerView: 2,
+            },
+            1050: {
+                slidesPerView: 3,
+            }
+          }
         };
         Object.assign(swiperRef.current, params);
         swiperRef.current.initialize();
     }, []);
 
     return (
-        <ClientsContainer className="container">
-            <h2 className="title">our clients that love to work with us</h2>
+        <ClientsContainer className="container clients">
+            <ClientsTitle className="title">our clients that love to work with us</ClientsTitle>
             <swiper-container init='false' ref={swiperRef}>
                 {reviews.map((review) => (
                     <swiper-slide key = {review.id}>

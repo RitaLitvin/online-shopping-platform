@@ -1,19 +1,18 @@
 import React from "react";
 import logo from '../img/logo.png';
 import { styled } from "styled-components";
+import { NavLink } from "react-router-dom";
 
-const LogoLink = styled.a`
-`
 const LogoImg = styled.img`
     width: 115px;
     height: 25px;
 `
 
-const Logo = () => {
+const Logo = ({setFilterOption}) => {
     return (
-        <a href="#">
+        <NavLink to={'/'} onClick = {() => setFilterOption([])}>
             <LogoImg src={logo} alt="logo"></LogoImg>
-        </a>
+        </NavLink>
     )
 }
 

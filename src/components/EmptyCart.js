@@ -16,6 +16,11 @@ const EmptyCartContainer = styled.div`
     grid-template-columns: auto;
     background-color: white;
     background-size: 50%;
+    @media (max-width:800px) {
+        padding: 50px 20px;
+        text-align: center;
+        grid-template-areas: 'title' 'text' 'button';
+    }
     & h2 {
         grid-area: title;
         display: inline;
@@ -30,6 +35,9 @@ const EmptyCartContainer = styled.div`
         grid-area: img;
         width: 150px;
         object-position: 50% 50%;
+        @media (max-width:800px) {
+            display: none;
+        }
     }
     & button{
         grid-area: button;

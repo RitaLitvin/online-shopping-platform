@@ -9,6 +9,10 @@ const CardContainer = styled.div`
     margin-bottom: 75px;
     margin-top: -100px;
     left: calc(50% - 570px);
+    @media (max-width: 800px) {
+        flex-direction: column;
+        align-items: center;
+}
 `
 const CardBestsellers = styled.div`
     background: url(${first_card_bg}) center no-repeat;
@@ -19,6 +23,10 @@ const CardBestsellers = styled.div`
     height: 200px;
     border-radius: 5px;
     box-shadow: 0px 0px 15px rgba(181,181,181,50%);
+    @media (max-width: 800px) {
+        width: 80%;
+        height: 100px;
+}
 `
 const CardNew = styled.div`
     background: url(${second_card_bg}) center no-repeat;
@@ -29,6 +37,10 @@ const CardNew = styled.div`
     height: 200px;
     border-radius: 5px;
     box-shadow: 0px 0px 15px rgba(181,181,181,50%);
+    @media (max-width: 800px) {
+        width: 80%;
+        height: 100px;
+}
 `
 const CardBestsellersText = styled.h4`
     color: #336;

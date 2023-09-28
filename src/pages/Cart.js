@@ -17,14 +17,14 @@ const CartContainer = styled.div`
     }
 `
 
-const Cart = ({cart, inc, dec, deleteProduct, setFilterOption}) => {
+const Cart = ({cart, inc, dec, deleteProduct, setFilterOption, totalSum}) => {
     console.log(cart)
     return (
         <CartContainer className='container'>
             <span>Home/Shopping Cart</span>
             <h2 className='title'>Shopping cart</h2>
-            {cart.length == 0 ? <EmptyCart setFilterOption = {setFilterOption}/> : <FullCart cart = {cart} inc = {inc}
-              dec = {dec} deleteProduct = {deleteProduct}/>}
+            {cart.length === 0 ? <EmptyCart setFilterOption = {setFilterOption}/> : <FullCart cart = {cart} inc = {inc}
+              dec = {dec} deleteProduct = {deleteProduct} totalSum = {totalSum}/>}
         </CartContainer>
     )
 }

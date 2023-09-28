@@ -5,23 +5,18 @@ import { register } from 'swiper/element/bundle';
 import ProductCard from "./Card";
 import { NavLink } from "react-router-dom";
 
-
 const BestsellersContainer = styled.div`
     text-align: center;
 `
-// const CardContainer = styled.div`
-//     display: flex;
-//     gap: 30px;
-// `
 const BestsellersSubtitle = styled.h3`
     margin-bottom: 40px;
 `
-const Bestsellers = ({items, createCount}) => {
+const Bestsellers = ({items}) => {
     const swiperRef = useRef(null);
     useEffect(() => {
         register();
         const params = {
-        slidesPerView: 4,
+        // slidesPerView: 4,
         spaceBetween:30,
         navigation: true,
         pagination: true,
@@ -33,6 +28,15 @@ const Bestsellers = ({items, createCount}) => {
             .swiper {
                 margin-bottom:40px;
             }
+            @media(max-width:700px) {
+                .swiper {
+                    width:70%;
+                }
+                :host {
+                    --swiper-navigation-size: 30px;
+                }
+            }
+
             .swiper-button-prev svg path {
                 fill:#336;
             }
@@ -48,6 +52,20 @@ const Bestsellers = ({items, createCount}) => {
             }
         `,
         ],
+        breakpoints: {
+            0: {
+                slidesPerView: 1,
+            },
+            600: {
+                slidesPerView: 2,
+            },
+            900: {
+                slidesPerView: 3,
+            },
+            1200: {
+                slidesPerView: 4,
+            },
+          }
         };
         Object.assign(swiperRef.current, params);
         swiperRef.current.initialize();
@@ -61,13 +79,11 @@ const Bestsellers = ({items, createCount}) => {
                     <swiper-slide key = {item.id}>
                         <NavLink to={`/product/${item.id}`}>
                             <ProductCard
-                                id = {item.id}
                                 src = {item.imgFirst}
                                 type = {item.type}
                                 category = {item.category}
                                 title = {item.title}
                                 price = {item.price}
-                                createCount = {createCount}
                             />
                         </NavLink>
                     </swiper-slide>

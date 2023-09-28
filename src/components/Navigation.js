@@ -1,40 +1,30 @@
-import React from "react";
+import React, {useRef, useEffect, useState} from "react";
 import { styled } from "styled-components";
 import { Link } from 'react-router-dom';
-// hover color - #333
-const NavList = styled.ul`
-    display: flex;
-    gap: 60px;
-`
-const NavLink = styled(Link)`
-    color: #fff;
-    font-size: 14px;
-    transition: 0.2s;
-    &:hover {
-        color: #336;
-    }
-    &:active {
-    color: red;
-  }
-`
+import { CSSTransition } from "react-transition-group";
+import NavigationList from "./NavigationList";
 
-const Navigation = ({setFilterOption}) => {
+const Navigation = ({setFilterOption, active}) => {
+    const nodeRef = useRef(null);
+    const [windowWidth, setWindowWidth] = useState(window.screen.width)
+
+    useEffect(() => {
+        window.onresize = () => {setWindowWidth(window.screen.width)};
+        return () => {window.onresize = false};
+    }, [windowWidth]);
     return (
-        <nav className="nav">
-            <NavList>
-                <li className="nav__item">
-                    <NavLink to={'/'} onClick = {() => setFilterOption([])}>Home</NavLink>
-                </li>
-                <li className="nav__item">
-                    <NavLink to={'/shop'} onClick= {() => setFilterOption ([])}>Shop</NavLink>
-                </li>
-                <li className="nav__item">
-                    <NavLink href="#">Product</NavLink>
-                </li>
-                <li className="nav__item">
-                    <NavLink href="#">Blog</NavLink>
-                </li>
-            </NavList>
+        <nav>
+            {windowWidth > 1023 ? <NavigationList setFilterOption={setFilterOption}/> :
+
+            <CSSTransition
+                in={active}
+                classNames='show'
+                timeout={500}
+                nodeRef={nodeRef}
+                unmountOnExit
+            >
+                <NavigationList setFilterOption={setFilterOption}/>
+            </CSSTransition>}
         </nav>
     )
 }

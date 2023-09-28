@@ -2,11 +2,7 @@ import React from "react";
 import { styled } from "styled-components";
 import imageBackground from '../img/bg-girl.png'
 
-
-// const HeroSection = styled.div`
-//     /* background: linear-gradient(to bottom right, #9c9, #6cc); */
-// `
-const Container = styled.div`
+const HeroContainer = styled.div`
     background-image: url(${imageBackground});
     background-position: bottom -45px right -60px;
     background-size: 600px;
@@ -16,6 +12,9 @@ const Container = styled.div`
     gap: 35px;
     margin-top: -250px;
     padding-bottom: 225px;
+    @media (max-width: 900px) {
+        background-image: none;
+}
 `
 const HeroTitle = styled.h1`
     text-transform: uppercase;
@@ -23,6 +22,12 @@ const HeroTitle = styled.h1`
     line-height: 1.3;
     letter-spacing: 1px;
     color: white;
+    @media (max-width: 600px) {
+        font-size: 35px;
+}
+    @media (max-width: 400px) {
+        font-size: 25px;
+}
 `
 const FirstWord = styled.span`
     color: #ccc;
@@ -38,6 +43,9 @@ const HeroDescription = styled.h3`
     color: #336;
     font-weight: 400;
     letter-spacing: -0.8px;
+    @media (max-width: 600px) {
+        font-size: 14px;
+}
 `
 const Button = styled.button`
     cursor: pointer;
@@ -50,9 +58,9 @@ const Button = styled.button`
     border: none;
     letter-spacing: 0.5px;
     font-weight: 600;
-    transition: 0.5s;
+    transition: color 0.5s;
     &:hover{
-        color: #ffe36b
+        color: #ffe36b;
     }
 `
 export {Button};
@@ -60,11 +68,11 @@ export {Button};
 const Hero = () => {
     return(
         <section>
-            <Container className="container">
+            <HeroContainer className="container">
                 <HeroTitle>best fashion <br></br> solution for you <br></br> <FirstWord>in</FirstWord> <SecondWord>one</SecondWord> <ThirdWord>website</ThirdWord></HeroTitle>
                 <HeroDescription>We will help you to choose the product <br></br> that without the doubt suits you best. <br></br> And we mean it</HeroDescription>
                 <Button>read more</Button>
-            </Container>
+            </HeroContainer>
         </section>
     )
 }

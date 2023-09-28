@@ -24,10 +24,17 @@ const ShopSection = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    /* margin-top: 105px; */
+    @media (max-width:500px) {
+        gap: 10px;
+    }
 `
+const ShopCardWrap = styled.div`
+    @media (max-width:1000px) {
+        width: 40%;
+    }
 
-const Shop = ({items, onClickFilterOption }) => {
+`
+const Shop = ({ items, onClickFilterOption }) => {
 
     return (
         <ShopContainer className="container">
@@ -36,15 +43,17 @@ const Shop = ({items, onClickFilterOption }) => {
             <ShopWrap>
                 <ShopSection>
                     {items.map((item) => (
-                        <NavLink to={`/product/${item.id}`} key = {item.id}>
-                            <ProductCard
-                                src = {item.imgFirst}
-                                type = {item.type}
-                                category = {item.category}
-                                title = {item.title}
-                                price = {item.price}
-                            />
-                        </NavLink>
+                        <ShopCardWrap key = {item.id}>
+                            <NavLink to={`/product/${item.id}`} >
+                                <ProductCard
+                                    src = {item.imgFirst}
+                                    type = {item.type}
+                                    category = {item.category}
+                                    title = {item.title}
+                                    price = {item.price}
+                                />
+                            </NavLink>
+                        </ShopCardWrap>
                     ))}
                 </ShopSection>
                 <Filter items = {items}

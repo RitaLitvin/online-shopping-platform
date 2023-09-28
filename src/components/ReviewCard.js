@@ -15,19 +15,14 @@ const CardContainer = styled.div`
     padding: 15px;
     margin: 15px;
 `
-// const ClientImage = styled.img`
-//     border-radius: 50%;
-//     width: 50px;
-// `
 const ClientName = styled.p`
     font-weight: 600;
     text-transform: capitalize;
 `
 const ClientReview = styled.p`
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.3;
 `
-
 
 const ReviewCard = ({name, text}) => {
     return(

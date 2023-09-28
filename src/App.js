@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {Routes, Route, Link} from 'react-router-dom';
+import {Routes, Route, useLocation} from 'react-router-dom';
 import Header from './layout/Header';
 import Hero from './layout/Hero';
 import Footer from './layout/Footer';
@@ -24,6 +24,9 @@ const GlobalStyle = createGlobalStyle`
   }
   .container {
     max-width: 1170px;
+    /* padding: 0 30px; */
+    padding-left: 20px;
+    padding-right: 20px;
     margin-left: auto;
     margin-right: auto;
   }
@@ -48,46 +51,56 @@ const GlobalStyle = createGlobalStyle`
     font-size: 16px;
     font-weight: 400;
   }
+  .show-enter {
+    opacity: 0;
+  }
+  .show-enter-active {
+    opacity: 1;
+    transition: opacity 0.5s;
+  }
+  .show-exit {
+    opacity: 1;
+  }
+  .show-exit-active {
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  @media (max-width:600px) {
+    .title::before {
+      content: none;
+    }
+  }
 `
 const ContainerTop = styled.div`
   background-image: linear-gradient(to right, #9c9, #6cc);
 `
 
 const App = () => {
-
+  const location = useLocation();
+  const currentPath = location.pathname;
   const [items, setItems] = useState([]);
   const [filterOption, setFilterOption] = useState(0);
   const [cart, setCart] = useState(localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : []);
-  // const [count, setCount] = useState(1);
-  console.log(items)
 
-  const createCount = (id) => {
-    console.log(id)
-    setItems(
-      items.map((product) =>
-        product.id == id ? { ...product, count: 1 } : product
-      )
-    );
-    console.log(items)
-  }
+  console.log(filterOption)
 
   const addToCart = (product) => {
-    product.count = 1;
-    const productInCart = cart.find(
+    let productInCart = cart.find(
       (productInCart) => productInCart.id === product.id
     );
     if (!productInCart) {
       setCart([...cart, product]);
-    }
-    console.log(cart)
+      console.log(cart)
+
+    } else {
+      console.log(productInCart)
+      console.log(product)
+    setCart(
+      cart.map((item) =>
+      item.id == product.id ? item = product : item))
+    };
   }
-  // const counterInc = (product) => {
-  //   setCount({ ...product, count: product.count + 1 });
-  // }
-  // const counterDec = (product) => {
-  //   setCount({...product, count: product.count - 1 });
-  // }
-// console.log(count)
+
   const dec = (id) => {
     const productInCart = cart.find((productInCart) => productInCart.id === id);
     if (productInCart.count > 1) {
@@ -114,6 +127,13 @@ const App = () => {
       setCart(updatedCart)
     }
 
+    const totalSum = (cart) => {
+      const totalSum = cart.reduce((sum, item) => {
+        return sum + item.count*Number(item.price)
+      }, 0)
+      return totalSum.toFixed(2);
+    }
+
   useEffect(() => {
     fetch(`http://localhost:3001/items?${(filterOption !== 0 && filterOption.length !== 0) ? `${filterOption.filteredBy}=${encodeURIComponent(filterOption.value)}` : '' }`)
     .then((result) => result.json())
@@ -124,24 +144,21 @@ const App = () => {
     localStorage.setItem('cart', JSON.stringify(cart))
   }, [cart])
 
+
   return (
     <div className="App">
     <GlobalStyle/>
         <ContainerTop>
         <Header setFilterOption = {setFilterOption}/>
-        {(window.location.href == 'http://localhost:3000/') && <Hero />}
+        {currentPath === '/' && <Hero />}
         </ContainerTop>
-        {/* <Home items={items} /> */}
-        {/* <Main items={items}/> */}
-
 
         <Routes>
-          <Route path = "/" element = {<Home items={items} createCount = {createCount}/>}/>
-          <Route path = "/product/:id" element = {<Product items={items} onClickFilterOption = {(id) => setFilterOption(id)} addToCart = {addToCart} inc = {inc} dec = {dec} createCount = {createCount} />}/>
+          <Route path = "/" element = {<Home items={items} onClickFilterOption = {(id) => setFilterOption(id)}/>}/>
+          <Route path = "/product/:id" element = {<Product items={items} onClickFilterOption = {(id) => setFilterOption(id)} addToCart = {addToCart} inc = {inc} dec = {dec}/>}/>
           <Route path = "/shop" element = {<Shop items={items} onClickFilterOption = {(id) => setFilterOption(id)}/>}/>
           {/* <Route path = "/wishlist" element = {<Wishlist/>}/> */}
-          <Route path = "/cart" element = {<Cart cart = {cart} inc = {inc}
-              dec = {dec} deleteProduct = {deleteProduct} setFilterOption={setFilterOption}/>}/>
+          <Route path = "/cart" element = {<Cart cart = {cart} inc = {inc} dec = {dec} deleteProduct = {deleteProduct} setFilterOption={setFilterOption} totalSum = {totalSum}/>}/>
           <Route path = "/wishlist" element = {<Wishlist />}/>
         </Routes>
         <Footer/>

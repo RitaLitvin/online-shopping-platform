@@ -9,11 +9,17 @@ const FullCartContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 40px;
+    @media (max-width: 900px) {
+        padding: 150px 10px;
+    }
 `
 const FullCartProducts = styled.div`
     display: flex;
     flex-direction: column;
     gap: 75px;
+    @media (max-width: 500px) {
+        gap: 20px;
+    }
 `
 const FullCartProductSum = styled.div`
     background-color: #75c9b7;
@@ -24,11 +30,15 @@ const FullCartProductSum = styled.div`
         font-size: 20px;
         text-transform: uppercase;
         font-weight: 600;
+        @media (max-width: 500px) {
+            font-size: 15px;
+        }
     }
 `
 
-const FullCart = ({cart, inc, dec, deleteProduct}) => {
+const FullCart = ({cart, inc, dec, deleteProduct, totalSum}) => {
     console.log(cart);
+    console.log(totalSum(cart));
     return (
         <FullCartContainer>
             <FullCartProducts>
@@ -47,7 +57,7 @@ const FullCart = ({cart, inc, dec, deleteProduct}) => {
                 ))}
             </FullCartProducts>
             <FullCartProductSum>
-                <span>cart totals: $</span>
+                <span>cart totals: {totalSum(cart)}$</span>
             </FullCartProductSum>
         </FullCartContainer>
     )

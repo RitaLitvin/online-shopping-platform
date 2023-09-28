@@ -10,12 +10,12 @@ import Instagram from "../components/Instagram";
 
 
 
-const Main = ({items, createCount}) => {
+const Main = ({items}) => {
     // console.log(items)
     return (
         <main>
             <CategoryCards/>
-            <Bestsellers items={items} createCount={createCount}/>
+            <Bestsellers items={items}/>
             <Categories items={items}/>
             <Trends items={items}/>
             <About/>

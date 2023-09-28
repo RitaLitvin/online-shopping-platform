@@ -15,8 +15,9 @@ const InstagramSection = styled.div`
 `
 
 const InstagramContainer = styled.div`
-    padding: 20px 0;
+    padding: 20px 30px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 30px;
 `
@@ -33,10 +34,15 @@ const InstagramImage = styled.img`
         &:nth-child(6) {
             object-position: top;
         }
+    @media (max-width: 575px) {
+        width: 110px;
+        height: 110px;
+    }
 `
 
 const InstagramCover = styled.div`
     background-color: #0e0e0e7a;
+    display: flex;
     position: absolute;
     right: 0;
     left: 0;
@@ -45,7 +51,7 @@ const InstagramCover = styled.div`
     z-index: 0;
 `
 const InstagramBlock = styled.div`
-    margin: 80px auto;
+    margin: auto auto;
     color: white;
     background-color: #76c9b7;
     width: 150px;
