@@ -1,18 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {BrowserRouter} from 'react-router-dom'
+import {BrowserRouter, HashRouter} from 'react-router-dom'
 import App from './App';
 import FontStyles from './fonts/fontStyles';
 import GlobalProvider from './context/GlobalContext';
+// const data = require('../server/db.json');
+// module.exports = () => ({
+//   data: data,
+// });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <GlobalProvider>
-      <BrowserRouter>
+      <HashRouter>
         <FontStyles />
         <App />
-      </BrowserRouter>
+      </HashRouter>
     </GlobalProvider>
   </React.StrictMode>
 );

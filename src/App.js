@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { ProductsContext } from './context/ProductsContext';
-import {Routes, Route, useLocation} from 'react-router-dom';
+import React from 'react';
+import {Routes, Route, HashRouter, useLocation} from 'react-router-dom';
 import Header from './layout/Header';
 import Hero from './layout/Hero';
 import Footer from './layout/Footer';
