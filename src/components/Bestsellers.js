@@ -15,6 +15,7 @@ const BestsellersSubtitle = styled.h3`
 const Bestsellers = () => {
     const {items, setFilterOption} = useContext(ProductsContext);
     const swiperRef = useRef(null);
+    console.log(items)
     useEffect(() => {
         register();
         const params = {
@@ -72,6 +73,11 @@ const Bestsellers = () => {
         Object.assign(swiperRef.current, params);
         swiperRef.current.initialize();
     }, []);
+
+
+
+
+
     return (
         <BestsellersContainer className="container">
             <h2 className="title">Bestsellers</h2>

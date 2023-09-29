@@ -7,6 +7,7 @@ const NavList = styled.ul`
     display: flex;
     gap: 60px;
     @media (max-width: 1023px) {
+        opacity: 1;
         align-items: center;
         flex-direction: column;
         position: absolute;
