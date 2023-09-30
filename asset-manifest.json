@@ -1,28 +1,28 @@
 {
   "files": {
-    "main.js": "/static/js/main.37773f18.js",
-    "static/media/bg-girl.png": "/static/media/bg-girl.ccdee0b277e613c880cd.png",
-    "static/media/category-men.jpg": "/static/media/category-men.a0e8e849f159a31f6e8f.jpg",
-    "static/media/category-women.jpg": "/static/media/category-women.30ce553d61a128a2145d.jpg",
-    "static/media/empty-cart.png": "/static/media/empty-cart.f99cc0b1a189fcde17b6.png",
-    "static/media/card-second-bg.jpg": "/static/media/card-second-bg.0533d1110de94c6f4ba7.jpg",
-    "static/media/card-first-bg.jpg": "/static/media/card-first-bg.b7ec1e41b41569c53193.jpg",
-    "static/media/third-instagram-img.jpg": "/static/media/third-instagram-img.8a2a8114a77c498fb319.jpg",
-    "static/media/fifth-instagram-img.jpg": "/static/media/fifth-instagram-img.7a7fc1b91aa7de8fb7c2.jpg",
-    "static/media/second-instagram-img.jpg": "/static/media/second-instagram-img.efaafb09f8a6b4de2be0.jpg",
-    "static/media/about.jpg": "/static/media/about.204111a2e325ab6d938b.jpg",
-    "static/media/sixth-instagram-img.jpg": "/static/media/sixth-instagram-img.a9ffe83d9a50b6568b56.jpg",
-    "static/media/first-instagram-img.jpg": "/static/media/first-instagram-img.7ffe597e380a304c7b4c.jpg",
-    "static/media/Prompt-SemiBold.woff": "/static/media/Prompt-SemiBold.0d4570e8ec8cd7a057bc.woff",
-    "static/media/Prompt-Regular.woff": "/static/media/Prompt-Regular.2dc5458c99ca8b280afb.woff",
-    "static/media/Prompt-SemiBold.woff2": "/static/media/Prompt-SemiBold.216aa8289fada9c4e89b.woff2",
-    "static/media/Prompt-Regular.woff2": "/static/media/Prompt-Regular.e354fcc4a82a8c425250.woff2",
-    "static/media/logo.png": "/static/media/logo.b1638fdd526190fa0fe3.png",
-    "static/media/fourth-instagram-img.jpg": "/static/media/fourth-instagram-img.48881efe17d3d63a45d5.jpg",
-    "index.html": "/index.html",
-    "main.37773f18.js.map": "/static/js/main.37773f18.js.map"
+    "main.js": "/online-shopping-platform/static/js/main.317abe66.js",
+    "static/media/bg-girl.png": "/online-shopping-platform/static/media/bg-girl.ccdee0b277e613c880cd.png",
+    "static/media/category-men.jpg": "/online-shopping-platform/static/media/category-men.a0e8e849f159a31f6e8f.jpg",
+    "static/media/category-women.jpg": "/online-shopping-platform/static/media/category-women.30ce553d61a128a2145d.jpg",
+    "static/media/empty-cart.png": "/online-shopping-platform/static/media/empty-cart.f99cc0b1a189fcde17b6.png",
+    "static/media/card-second-bg.jpg": "/online-shopping-platform/static/media/card-second-bg.0533d1110de94c6f4ba7.jpg",
+    "static/media/card-first-bg.jpg": "/online-shopping-platform/static/media/card-first-bg.b7ec1e41b41569c53193.jpg",
+    "static/media/third-instagram-img.jpg": "/online-shopping-platform/static/media/third-instagram-img.8a2a8114a77c498fb319.jpg",
+    "static/media/fifth-instagram-img.jpg": "/online-shopping-platform/static/media/fifth-instagram-img.7a7fc1b91aa7de8fb7c2.jpg",
+    "static/media/second-instagram-img.jpg": "/online-shopping-platform/static/media/second-instagram-img.efaafb09f8a6b4de2be0.jpg",
+    "static/media/about.jpg": "/online-shopping-platform/static/media/about.204111a2e325ab6d938b.jpg",
+    "static/media/sixth-instagram-img.jpg": "/online-shopping-platform/static/media/sixth-instagram-img.a9ffe83d9a50b6568b56.jpg",
+    "static/media/first-instagram-img.jpg": "/online-shopping-platform/static/media/first-instagram-img.7ffe597e380a304c7b4c.jpg",
+    "static/media/Prompt-SemiBold.woff": "/online-shopping-platform/static/media/Prompt-SemiBold.0d4570e8ec8cd7a057bc.woff",
+    "static/media/Prompt-Regular.woff": "/online-shopping-platform/static/media/Prompt-Regular.2dc5458c99ca8b280afb.woff",
+    "static/media/Prompt-SemiBold.woff2": "/online-shopping-platform/static/media/Prompt-SemiBold.216aa8289fada9c4e89b.woff2",
+    "static/media/Prompt-Regular.woff2": "/online-shopping-platform/static/media/Prompt-Regular.e354fcc4a82a8c425250.woff2",
+    "static/media/logo.png": "/online-shopping-platform/static/media/logo.b1638fdd526190fa0fe3.png",
+    "static/media/fourth-instagram-img.jpg": "/online-shopping-platform/static/media/fourth-instagram-img.48881efe17d3d63a45d5.jpg",
+    "index.html": "/online-shopping-platform/index.html",
+    "main.317abe66.js.map": "/online-shopping-platform/static/js/main.317abe66.js.map"
   },
   "entrypoints": [
-    "static/js/main.37773f18.js"
+    "static/js/main.317abe66.js"
   ]
 }
