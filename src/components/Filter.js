@@ -92,7 +92,7 @@ const Filter = () => {
     const {setFilterOption} = useContext(ProductsContext);
     const [filterList, setFilterList] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:3001/items`)
+        fetch(`https://odd-gray-snail-hem.cyclic.cloud/items`)
         .then((result) => result.json())
         .then((data) => setFilterList(data))
       }, [])

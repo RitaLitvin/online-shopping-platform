@@ -14,16 +14,15 @@ const Navigation = ({active}) => {
         window.onresize = () => {setWindowWidth(window.screen.width)};
         return () => {window.onresize = false};
     }, [windowWidth]);
-    console.log(active)
     return (
         <nav>
-            {windowWidth > 1023 && active == 'false' ? <NavigationList /> :
+            {windowWidth > 1023 && active == false ? <NavigationList /> :
 
             <CSSTransition
                 nodeRef={nodeRef}
                 in={active}
                 classNames='show'
-                timeout={500}
+                timeout={100}
                 mountOnEnter
                 unmountOnExit
             >

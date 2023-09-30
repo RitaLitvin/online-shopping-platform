@@ -225,7 +225,7 @@ const Product = () => {
     }
 
     useEffect(() => {
-        fetch(`http://localhost:3001/items/${id}`)
+        fetch(`https://odd-gray-snail-hem.cyclic.cloud/items/${id}`)
         .then((result) => result.json())
         .then((product) => {  product.count = count
         localStorage.setItem('item', JSON.stringify(product))

@@ -55,7 +55,7 @@ const ProductsProvider = ({children}) => {
     }
 
     useEffect(() => {
-        fetch(`http://localhost:3001/items?${(filterOption !== 0 && filterOption.length !== 0) ? `${filterOption.filteredBy}=${encodeURIComponent(filterOption.value)}` : '' }`)
+        fetch(`https://odd-gray-snail-hem.cyclic.cloud/items?${(filterOption !== 0 && filterOption.length !== 0) ? `${filterOption.filteredBy}=${encodeURIComponent(filterOption.value)}` : '' }`)
         .then((result) => result.json())
         .then((data) => setItems(data))
     }, [filterOption])
