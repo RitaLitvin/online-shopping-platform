@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/online-shopping-platform/static/js/main.317abe66.js",
+    "main.js": "/online-shopping-platform/static/js/main.12a4f9ea.js",
     "static/media/bg-girl.png": "/online-shopping-platform/static/media/bg-girl.ccdee0b277e613c880cd.png",
     "static/media/category-men.jpg": "/online-shopping-platform/static/media/category-men.a0e8e849f159a31f6e8f.jpg",
     "static/media/category-women.jpg": "/online-shopping-platform/static/media/category-women.30ce553d61a128a2145d.jpg",
@@ -20,9 +20,9 @@
     "static/media/logo.png": "/online-shopping-platform/static/media/logo.b1638fdd526190fa0fe3.png",
     "static/media/fourth-instagram-img.jpg": "/online-shopping-platform/static/media/fourth-instagram-img.48881efe17d3d63a45d5.jpg",
     "index.html": "/online-shopping-platform/index.html",
-    "main.317abe66.js.map": "/online-shopping-platform/static/js/main.317abe66.js.map"
+    "main.12a4f9ea.js.map": "/online-shopping-platform/static/js/main.12a4f9ea.js.map"
   },
   "entrypoints": [
-    "static/js/main.317abe66.js"
+    "static/js/main.12a4f9ea.js"
   ]
 }
