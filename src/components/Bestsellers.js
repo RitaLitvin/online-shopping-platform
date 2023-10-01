@@ -30,7 +30,7 @@ const Bestsellers = () => {
             .swiper {
                 margin-bottom:40px;
             }
-            @media(max-width:700px) {
+            @media(max-width:800px) {
                 .swiper {
                     width:70%;
                 }
@@ -58,10 +58,10 @@ const Bestsellers = () => {
             0: {
                 slidesPerView: 1,
             },
-            600: {
+            500: {
                 slidesPerView: 2,
             },
-            900: {
+            800: {
                 slidesPerView: 3,
             },
             1200: {

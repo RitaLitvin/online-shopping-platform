@@ -7,13 +7,6 @@ const ClientsContainer = styled.div`
     text-align: center;
     margin-top: -190px;
 `
-const ClientsTitle = styled.h2`
-    /* &::before{
-    }
-    @media (max-width: 600px) {
-        content: none;
-    } */
-`
 const url = 'https://trustpilot4.p.rapidapi.com/?domain=www.asos.com&page=2';
 const options = {
 	method: 'GET',
@@ -92,7 +85,7 @@ const Clients = () => {
 
     return (
         <ClientsContainer className="container clients">
-            <ClientsTitle className="title">our clients that love to work with us</ClientsTitle>
+            <h2 className="title">our clients that love to work with us</h2>
             <swiper-container init='false' ref={swiperRef}>
                 {reviews.map((review) => (
                     <swiper-slide key = {review.id}>

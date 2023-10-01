@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { styled } from "styled-components";
 
 const Card = styled.div`
@@ -7,22 +7,21 @@ const Card = styled.div`
     align-items: flex-start;
     gap: 10px;
     margin-bottom: 30px;
+    border-radius: 5px;
     cursor: pointer;
     box-shadow: 0px 0px 15px 5px rgba(150,150,150,20%);
     @media (max-width: 1000px) {
         width: 100%;
-        margin-bottom: 30px;
         background-color: white;
-        border-radius: 5px;
     }
 `
 const CardImg = styled.img`
-    width: 270px;
+    width: 100%;
     height: 350px;
-    border-radius: 5px;
     object-fit: cover;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
     @media (max-width: 1000px) {
-        width: 100%;
         object-fit: contain;
         height: auto;
     }
@@ -32,9 +31,10 @@ const CardText = styled.div`
     flex-direction: column;
     align-items: flex-start;
     gap: 5px;
-    padding-left: 15px;
+    padding: 0 0 10px 15px;
     @media (max-width: 1000px) {
-        padding: 0 5px;
+        padding: 0 0 10px 5px;
+
     }
 `
 const CardCategory = styled.span`
@@ -51,17 +51,16 @@ const CardName = styled.h3`
     font-size: 16px;
     text-align: left;
     text-transform: capitalize;
-    width: 255px;
+    max-width: 250px;
+    display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     @media (max-width: 1000px) {
-        width: 100%;
         font-size: 14px;
     }
     @media (max-width: 500px) {
-        font-size: 10px;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+        font-size: 9px;
     }
 `
 const CardPrice = styled.span`
