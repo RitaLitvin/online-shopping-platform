@@ -1,5 +1,5 @@
 import React from 'react';
-import {Routes, Route, HashRouter, useLocation} from 'react-router-dom';
+import {Routes, Route, useLocation} from 'react-router-dom';
 import Header from './layout/Header';
 import Hero from './layout/Hero';
 import Footer from './layout/Footer';
@@ -8,6 +8,7 @@ import Product from './pages/Product';
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
 import Wishlist from './pages/Wishlist';
+import ScrollToTop from './components/ScrollToTop';
 import { styled, createGlobalStyle } from 'styled-components';
 
 
@@ -51,19 +52,18 @@ const GlobalStyle = createGlobalStyle`
     font-size: 16px;
     font-weight: 400;
   }
-  .show-enter {
-    opacity: 0;
+  @media (max-width:1000px) {
+    .svg {
+      width: 100%;
+      height: auto;
+    }
   }
-  .show-enter-active {
-    opacity: 1;
-    transition: opacity 0.5s;
-  }
-  .show-exit {
-    opacity: 1;
-  }
-  .show-exit-active {
-    opacity: 0;
-    transition: opacity 0.5s;
+  @media (max-width: 880px) {
+    .svg-large {
+        /* grid-area: large; */
+        width: 100%;
+        height: auto;
+    }
   }
   @media (max-width:600px) {
     .title::before {
@@ -86,15 +86,15 @@ const App = () => {
         <Header />
         {currentPath === '/' && <Hero />}
         </ContainerTop>
-
-        <Routes>
-          <Route path = "/" element = {<Home />}/>
-          <Route path = "/product/:id" element = {<Product />}/>
-          <Route path = "/shop" element = {<Shop />}/>
-          {/* <Route path = "/wishlist" element = {<Wishlist/>}/> */}
-          <Route path = "/cart" element = {<Cart/>}/>
-          <Route path = "/wishlist" element = {<Wishlist />}/>
-        </Routes>
+        <ScrollToTop>
+          <Routes>
+            <Route path = "/" element = {<Home />}/>
+            <Route path = "/product/:id" element = {<Product />}/>
+            <Route path = "/shop" element = {<Shop />}/>
+            <Route path = "/cart" element = {<Cart/>}/>
+            <Route path = "/wishlist" element = {<Wishlist />}/>
+          </Routes>
+        </ScrollToTop>
         <Footer/>
     </div>
   );

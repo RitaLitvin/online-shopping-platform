@@ -4,6 +4,7 @@ import {Button} from "../layout/Hero";
 import { styled } from "styled-components";
 import ProductCard from "./Card";
 import { Link } from "react-router-dom";
+import CardSkeleton from "./CardSkeleton";
 
 
 const TrendsContainer = styled.div `
@@ -24,29 +25,31 @@ const TrendsCardContainer = styled.div`
     }
 `
 const Trends = () => {
-    const { items, setFilterOption } = useContext(ProductsContext);
+    const { items, setFilterOption, isLoading } = useContext(ProductsContext);
 
     const trendingItems = items.filter((item) => {
         return item.isTrending === "true"
     })
-
     return (
         <TrendsContainer>
             <h2 className="title">Trends of a month</h2>
             <TrendsCardWrap className="container">
-                {trendingItems.map((item, position) => ((position < 8) &&
-                    <TrendsCardContainer key = {item.id}>
-                        <Link to={`/product/${item.id}`}>
-                            <ProductCard
-                                src = {item.imgFirst}
-                                type = {item.type}
-                                category = {item.category}
-                                title = {item.title}
-                                price = {item.price}
-                                />
-                        </Link>
-                     </TrendsCardContainer>
-                    ))}
+                {isLoading
+                ? [...new Array(8)].map((_, index) => <TrendsCardContainer key = {index}><CardSkeleton/></TrendsCardContainer>)
+                : trendingItems.map((item, position) => ((position < 8) &&
+                <TrendsCardContainer key = {item.id}>
+                    <Link to={`/product/${item.id}`}>
+                         <ProductCard
+                            src = {item.imgFirst}
+                            type = {item.type}
+                            category = {item.category}
+                            title = {item.title}
+                            price = {item.price}
+                        />
+                    </Link>
+                 </TrendsCardContainer>
+                ))
+                }
             </TrendsCardWrap>
             <Link to={`/shop`} onClick = {() => setFilterOption({filteredBy: 'isTrending', value: 'true'})}>
                 <Button>Show more</Button>

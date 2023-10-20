@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from "react";
 import { styled } from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ProductsContext } from "../context/ProductsContext";
 
 const FilterContainer = styled.div`
@@ -8,14 +8,23 @@ const FilterContainer = styled.div`
     flex-direction: column;
     gap: 10px;
     @media (max-width:500px) {
-        width: 40%;
+        width: 45%;
     }
+`
+const InputSection = styled.div`
+    display: flex;
+    gap: 10px;
 `
 const SearchInput = styled.input`
     border-radius: 5px;
     outline: none;
+    width: 130px;
     border: 0px;
+    padding: 0 5px;
     box-shadow: 0px 0px 15px 5px rgba(150,150,150,20%);
+    @media (max-width:500px) {
+        width: 90px;
+    }
 `
 const FilterSection = styled.div`
     display: flex;
@@ -89,13 +98,18 @@ const FilterOptionValue = styled.span`
 `
 
 const Filter = () => {
-    const {setFilterOption} = useContext(ProductsContext);
+    const {setFilterOption, searchItem} = useContext(ProductsContext);
     const [filterList, setFilterList] = useState([]);
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const currentPath = location.pathname;
+
     useEffect(() => {
-        fetch(`https://odd-gray-snail-hem.cyclic.cloud/items`)
+        fetch(`https://spring-green-woodpecker-vest.cyclic.app/items`)
         .then((result) => result.json())
         .then((data) => setFilterList(data))
-      }, [])
+    }, [])
 
     const sortedItemsByType = Object.entries(filterList.reduce ((total, item) => {
         if (!total[item.type]) {
@@ -104,28 +118,40 @@ const Filter = () => {
          total[item.type] = total[item.type] + 1;
        }
          return total;
-     }, {}))
+    }, {}))
 
-     const sortedItemsByBrands = Object.entries(filterList.reduce ((total, item) => {
+    const sortedItemsByBrands = Object.entries(filterList.reduce ((total, item) => {
         if (!total[item.brand]) {
          total[item.brand] = 1;
        } else {
          total[item.brand] = total[item.brand] + 1;
        }
          return total;
-     }, {}))
+    }, {}))
 
-     const sortedItemsByCategory = Object.entries(filterList.reduce ((total, item) => {
+    const sortedItemsByCategory = Object.entries(filterList.reduce ((total, item) => {
         if (!total[item.category]) {
          total[item.category] = 1;
        } else {
          total[item.category] = total[item.category] + 1;
        }
          return total;
-     }, {}))
+    }, {}))
+    const handleSearch = function (value) {
+        if(currentPath !== '/shop') {
+            searchItem(value)
+            navigate('/shop')
+        } else {
+            searchItem(value)
+        }
+    }
+
+
     return (
         <FilterContainer>
-            <SearchInput></SearchInput>
+            <InputSection>
+                <SearchInput onKeyUp={(e) => {if (e.code === 'Enter') handleSearch(e.target.value)}}></SearchInput>
+            </InputSection>
             <FilterSection>
                 <FilterOption>
                     <FilterOptionTitle>Categories</FilterOptionTitle>

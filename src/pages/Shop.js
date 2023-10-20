@@ -4,6 +4,7 @@ import ProductCard from "../components/Card";
 import Filter from "../components/Filter";
 import { Link } from "react-router-dom";
 import { ProductsContext } from "../context/ProductsContext";
+import CardSkeleton from "../components/CardSkeleton";
 
 const ShopContainer = styled.div`
     text-align: center;
@@ -36,14 +37,17 @@ const ShopCardWrap = styled.div`
 
 `
 const Shop = () => {
-    const {items} = useContext(ProductsContext)
+    const {items, isLoading} = useContext(ProductsContext)
     return (
         <ShopContainer className="container">
             <ShopPath>Home/Shop</ShopPath>
             <h2 className="title">Shop</h2>
             <ShopWrap>
                 <ShopSection>
-                    {items.map((item) => (
+                    {isLoading
+                    ? [...new Array(10)].map((_, index) => <ShopCardWrap key = {index}><CardSkeleton/>
+                    </ShopCardWrap>)
+                    : items.map((item) => (
                         <ShopCardWrap key = {item.id}>
                             <Link to={`/product/${item.id}`} >
                                 <ProductCard

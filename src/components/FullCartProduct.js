@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import { ProductsContext } from '../context/ProductsContext';
 import { styled } from 'styled-components';
 import {ProductPieces} from '../pages/Product'
+import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 
@@ -67,9 +68,11 @@ const FullCartProductContainer = styled.div`
 
 const FullCartProduct = ({id, src, title, price, count}) => {
     const {inc, dec, deleteProduct} = useContext(ProductsContext);
+    const location = useLocation();
+    const currentPath = location.pathname;
     return (
         <FullCartProductContainer>
-            <FontAwesomeIcon icon={icon({name:"circle-xmark"})} style={{ color: '#336', cursor: 'pointer', fontSize: '16px' }} onClick={() => deleteProduct(id)} />
+            <FontAwesomeIcon icon={icon({name:"circle-xmark"})} style={{ color: '#336', cursor: 'pointer', fontSize: '16px' }} onClick={() => deleteProduct(id, currentPath)} />
             <img src = {src} alt = {title}></img>
             <span>{title}</span>
             <ProductPieces>

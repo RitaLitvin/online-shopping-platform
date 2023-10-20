@@ -1,8 +1,6 @@
 import React, {useContext} from 'react';
 import { ProductsContext } from '../context/ProductsContext';
 import { styled } from 'styled-components';
-import { Button } from '../layout/Hero';
-import { Link } from 'react-router-dom';
 import FullCartProduct from './FullCartProduct';
 
 const FullCartContainer = styled.div`

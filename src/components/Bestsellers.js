@@ -5,6 +5,7 @@ import { styled } from "styled-components";
 import { register } from 'swiper/element/bundle';
 import ProductCard from "./Card";
 import { Link } from "react-router-dom";
+import CardSkeleton from "./CardSkeleton";
 
 const BestsellersContainer = styled.div`
     text-align: center;
@@ -13,7 +14,8 @@ const BestsellersSubtitle = styled.h3`
     margin-bottom: 40px;
 `
 const Bestsellers = () => {
-    const {items, setFilterOption} = useContext(ProductsContext);
+    const {items, setFilterOption, isLoading} = useContext(ProductsContext);
+
     const swiperRef = useRef(null);
     useEffect(() => {
         register();
@@ -71,13 +73,15 @@ const Bestsellers = () => {
         };
         Object.assign(swiperRef.current, params);
         swiperRef.current.initialize();
-    }, []);
+    }, [items]);
     return (
         <BestsellersContainer className="container">
             <h2 className="title">Bestsellers</h2>
             <BestsellersSubtitle className="subtitle">Top products of a month</BestsellersSubtitle>
             <swiper-container init='false' ref={swiperRef}>
-                {items.map((item) => (item.isBestseller === "true" &&
+                {isLoading
+                ? [...new Array(4)].map((_, index) => <swiper-slide key = {index}><CardSkeleton/></swiper-slide>)
+                : items.map((item) => (item.isBestseller === "true" &&
                     <swiper-slide key = {item.id}>
                         <Link to={`/product/${item.id}`}>
                             <ProductCard

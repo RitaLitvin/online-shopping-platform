@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { Button } from '../layout/Hero';
 import Filter from '../components/Filter';
+import ProductSkeleton from '../components/ProductSkeleton';
 
 
 const ProductContainer = styled.div`
@@ -47,7 +48,9 @@ const ProductImages = styled.div`
 const ProductLargeImage = styled.img`
     grid-area: large;
     width: 370px;
-    height: 470px;
+    background-color: white;
+    /* height: 470px; */
+    height: 100%;
     box-shadow: 0px 0px 15px 5px rgba(150,150,150,20%);
     border-radius: 5px;
     @media (max-width: 880px) {
@@ -58,6 +61,7 @@ const ProductLargeImage = styled.img`
 `
 const ProductSmallFirstImage = styled.img`
     grid-area: small-first;
+    background-color: white;
     width: 70px;
     height: 80px;
     box-shadow: 0px 0px 15px 5px rgba(150,150,150,20%);
@@ -65,6 +69,7 @@ const ProductSmallFirstImage = styled.img`
 `
 const ProductSmallSecondImage = styled(ProductSmallFirstImage)`
     grid-area: small-second;
+    background-color: white;
 `
 const ProductInfo = styled.div`
     display: flex;
@@ -172,6 +177,9 @@ const ProductColor = styled.span`
 const ProductWishlist = styled.div`
     display: flex;
     align-items: center;
+    & span:first-of-type {
+        cursor:pointer;
+    }
     & span {
         font-size: 18px;
         font-weight: 600;
@@ -203,19 +211,13 @@ const ProductDescription = styled.div`
     }
 `
 
-
 const Product = () => {
-    const { addToCart } = useContext(ProductsContext);
+    const { addToCart, addToWishlist } = useContext(ProductsContext);
     const { id } = useParams();
-    const [add, setAddToCart] = useState(false);
     const [singleItem, setSingleItem] = useState(localStorage.getItem('item') ? JSON.parse(localStorage.getItem('item')) : []);
     const [count, setCount] = useState(1);
-    const [windowWidth, setWindowWidth] = useState(window.screen.width)
-
-    const handleAdd = (product) => {
-        setAddToCart(true);
-        addToCart(product);
-    };
+    const [windowWidth, setWindowWidth] = useState(window.screen.width);
+    const [isLoading, setIsLoading] = useState(true);
 
     const counterInc = (product) => {
         setCount(product.count = product.count + 1 );
@@ -223,18 +225,28 @@ const Product = () => {
     const counterDec = (product) => {
         setCount(product.count == 1 ? product.count : product.count = product.count - 1 );
     }
-
+    const checkCart = (product) => {
+        const localCart = JSON.parse(localStorage.getItem('cart'));
+        if (localCart !== null) {
+            const result = localCart.find((item) => item.id === product.id)
+            if (result) {
+                product.isInCart = true;
+            } else {
+                product.isInCart = false;
+            }
+        }
+    }
     useEffect(() => {
-        fetch(`https://odd-gray-snail-hem.cyclic.cloud/items/${id}`)
+        fetch(`https://spring-green-woodpecker-vest.cyclic.app/items/${id}`)
         .then((result) => result.json())
-        .then((product) => {  product.count = count
-        localStorage.setItem('item', JSON.stringify(product))
-        setSingleItem(product)})
+        .then((product) => {
+            product.count = count;
+            checkCart(product);
+            setSingleItem(product);
+            localStorage.setItem('item', JSON.stringify(product));
+            setIsLoading(false);
+        })
     }, [id]);
-
-    useEffect(() => {
-        setAddToCart(false);
-    }, [add]);
 
     useEffect(() => {
         localStorage.setItem('item', JSON.stringify(singleItem))
@@ -250,11 +262,15 @@ const Product = () => {
             <ProductPath>Home/Product</ProductPath>
             <h2 className='title'>Product</h2>
             <ProductWrap key={singleItem.id}>
+                {isLoading
+                ?
+                <ProductSkeleton/>
+                :
                 <ProductImages>
                     <ProductLargeImage src = {singleItem.imgFirst}></ProductLargeImage>
                     <ProductSmallFirstImage src = {singleItem.imgSecond} ></ProductSmallFirstImage>
                     <ProductSmallSecondImage src = {singleItem.imgThird}></ProductSmallSecondImage>
-                </ProductImages>
+                </ProductImages>}
                 <ProductInfo>
                     <ProductInfoName>
                         <span>{singleItem.type}/{singleItem.category}</span>
@@ -275,15 +291,15 @@ const Product = () => {
                         <FontAwesomeIcon icon={icon({name:"chevron-right"})} style={{ color: '#336', cursor: 'pointer', fontSize: '16px' }} onClick={() => counterInc(singleItem)}/>
                     </ProductPieces>
                     <ProductColor>Color: {singleItem.color}</ProductColor>
-                    <ProductWishlist>
+                    <ProductWishlist onClick={() => addToWishlist(singleItem)}>
                         <FontAwesomeIcon icon={icon({name:"heart", style: 'regular'})} style={{ color: '#336', cursor: 'pointer', fontSize: '20px' }} />
                         <span>add to wishlist</span>
                         <FontAwesomeIcon icon={icon({name:"comments", style: 'regular'})} style={{ color: '#336', cursor: 'pointer', fontSize: '20px', marginLeft: '40px' }} />
                         <span>ask about size</span>
                     </ProductWishlist>
-                    <Button onClick={() => handleAdd(singleItem)}>Add to the cart</Button>
+                    <Button onClick={() => addToCart(singleItem)}>{ singleItem.isInCart == true ? 'Already in the cart' : 'Add to the cart' }</Button>
                 </ProductInfo>
-                { windowWidth >= 700 ? <Filter/> : null}
+                { windowWidth >= 990 ? <Filter/> : null}
             </ProductWrap>
             <ProductDescription>
                 <h4>Description</h4>

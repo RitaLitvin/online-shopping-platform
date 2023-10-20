@@ -2,11 +2,18 @@ import React, {useContext} from "react";
 import { ProductsContext } from "../context/ProductsContext";
 import { styled } from "styled-components";
 import { Link } from 'react-router-dom';
+import useOutsideClick from "../hooks/useOutsideClick";
 
+const Nav = styled.nav`
+    position: relative;
+`
 
 const NavList = styled.ul`
     display: flex;
     gap: 60px;
+    & li:nth-last-child(-n+2) {
+        display: none;
+    }
     @media (max-width: 1023px) {
         align-items: center;
         flex-direction: column;
@@ -22,7 +29,10 @@ const NavList = styled.ul`
         background-color: #75c9b7;
         z-index: 3;
         transition: transform 0.3s ease-in-out;
-        transform: ${({ active }) => (active ? "translateX(0)" :"translateX(100%)")};
+        transform: ${({ $isactive }) => ($isactive ? "translateX(0)" : "translateX(800%)")};
+        & li:nth-last-child(-n+2) {
+        display: inline;
+        }
     }
 `
 const NavLink = styled(Link)`
@@ -34,12 +44,34 @@ const NavLink = styled(Link)`
     }
 `
 
-const Navigation = ({active}) => {
+const HeaderBurger = styled.div`
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: -3px;
+    cursor: pointer;
+    @media (max-width: 1023px) {
+       display: flex;
+       position: absolute;
+       right: 10px;
+       top: -5px;
+       z-index: 4;
+    }
+    & span {
+        background-color: white;
+        width: 25px;
+        height: 3px;
+        border-radius: 10px;
+    }
+`
+
+const Navigation = () => {
     const { setFilterOption } = useContext(ProductsContext);
+    const { ref, isActive, setIsActive } = useOutsideClick(false);
 
     return (
-        <nav>
-            <NavList active={active}>
+        <Nav>
+            {isActive && (<NavList $isactive = {isActive ? 1 :0 } ref={ref}>
                 <li>
                     <NavLink to={'/'} onClick = {() => setFilterOption([])}>Home</NavLink>
                 </li>
@@ -52,8 +84,19 @@ const Navigation = ({active}) => {
                 <li>
                     <NavLink href="#">Blog</NavLink>
                 </li>
-            </NavList>
-        </nav>
+                <li>
+                    <NavLink to={'/cart'}>Cart</NavLink>
+                </li>
+                <li>
+                    <NavLink to={'/wishlist'}>Wishlist</NavLink>
+                </li>
+            </NavList>)}
+            <HeaderBurger onClick={() => setIsActive(!isActive)}>
+                <span></span>
+                <span></span>
+                <span></span>
+            </HeaderBurger>
+        </Nav>
     )
 }
 
